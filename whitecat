@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+// application.php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Whitecat\Command\GithubWorkflowCommand;
+
+$application = new Application();
+
+// ... register commands
+
+try {
+    $application->add(new GithubWorkflowCommand());
+    $application->run();
+} catch (Exception $e) {
+    echo sprintf('Error code: %d , Error type: %s', $e->getCode(), $e->getMessage());
+}
+
+__HALT_COMPILER();

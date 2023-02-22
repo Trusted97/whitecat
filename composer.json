@@ -1,0 +1,18 @@
+{
+    "name": "whitecat/whitecat",
+    "description": "Developer toolbox",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Whitecat\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "symfony/console": "^6.2"
+    },
+    "bin": [
+        "whitecat"
+    ]
+}
