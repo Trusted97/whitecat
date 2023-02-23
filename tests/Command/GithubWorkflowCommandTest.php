@@ -10,17 +10,18 @@ use Whitecat\Command\GithubWorkflowCommand;
 
 class GithubWorkflowCommandTest extends TestCase
 {
-    public function testExecute()
+    public function testExecute(): void
     {
         $application = new Application();
         $application->add(new GithubWorkflowCommand());
-
         $installerCommand = $application->find('github:workflow');
 
         $this->assertInstanceOf(Command::class, $installerCommand);
 
         $commandTester = new CommandTester($installerCommand);
         $commandTester->execute([]);
+
+        $commandTester->assertCommandIsSuccessful();
 
         $this->assertStringContainsString(
             'Github workflow',
