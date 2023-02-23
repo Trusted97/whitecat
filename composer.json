@@ -8,20 +8,26 @@
             "Whitecat\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Whitecat\\Test\\": "tests/"
+        }
+    },
     "require": {
         "php": ">=8.0",
         "symfony/console": "^6.2"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.14"
+        "friendsofphp/php-cs-fixer": "^3.14",
+        "phpunit/phpunit": "^10"
     },
     "bin": [
         "whitecat"
     ],
     "scripts": {
-        "test": "vendor/bin/phpunit -c phpunit.xml.dist --no-coverage",
-        "test-coverage-text": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml.dist --colors=never --coverage-text",
-        "test-coverage-html": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml.dist --coverage-html coverage",
+        "test": "vendor/bin/phpunit -c phpunit.xml --no-coverage",
+        "test-coverage-text": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --colors=never --coverage-text",
+        "test-coverage-html": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html coverage",
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --verbose",
         "php-cs-fixer-dry-run": "vendor/bin/php-cs-fixer fix --verbose --diff --dry-run"
     }
