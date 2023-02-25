@@ -1,4 +1,4 @@
-name: Test
+name: PHPUnit & Coverage (CodeCov)
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        php: ['8.1']
+        php: ["8.1"]
 
     name: PHP ${{ matrix.php }}
 
@@ -24,8 +24,17 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: xdebug
 
-      - name: Check composer configuration
+      - name: Validate composer.json and composer.lock
         run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
 
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader

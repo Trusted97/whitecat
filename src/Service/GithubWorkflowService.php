@@ -24,9 +24,71 @@ class GithubWorkflowService
         $this->io->title('Github workflow');
 
         $this->addGithubWorkflowDirectory();
-        $this->addGithubTestAction();
+
+        $choice = $this->io->choice(
+            question: 'Select the workflow to create',
+            choices: [
+                'PHPUnit & Coverage (CodeCov)',
+                'Deploy to Amazon ECS',
+                'Deploy to Google Kubernetes Engine',
+                'Terraform Deploy',
+                'All',
+            ]
+        );
+
+        switch ($choice) {
+            case 'PHPUnit & Coverage (CodeCov)':
+                $this->addGithubTestAction();
+                $this->io->warning('Remember to add your Codecov Token in Github Secrets');
+                break;
+            case 'Deploy to Amazon ECS':
+                $this->addAmazonECSDeployAction();
+                break;
+            case 'Deploy to Google Kubernetes Engine':
+                $this->addGoogleGKEDeployAction();
+                break;
+            case 'Terraform Deploy':
+                $this->addTerraformDeployAction();
+                break;
+            case 'All':
+                $this->addGithubTestAction();
+                $this->addAmazonECSDeployAction();
+                $this->addGoogleGKEDeployAction();
+                $this->addTerraformDeployAction();
+                break;
+        }
+
+        $this->io->success('All work was correctly done!');
 
         return Command::SUCCESS;
+    }
+
+    private function setupAndCopyAction(
+        string $fileName,
+        string $questionMessage,
+        string $overrideCommentMessage,
+        string $skippedMessage
+    ): void {
+        $checkExists = $this->fs->exists($this->workflowPath . $fileName);
+        $override    = true;
+
+        if ($checkExists) {
+            $override = $this->io->confirm(
+                question: $questionMessage,
+                default: false
+            );
+        }
+
+        if ($override) {
+            $this->io->comment($overrideCommentMessage);
+            $this->fs->copy(
+                originFile: Path::normalize('dist/workflow/' . $fileName),
+                targetFile: $this->workflowPath . $fileName,
+                overwriteNewerFiles: true
+            );
+        } else {
+            $this->io->comment($skippedMessage);
+        }
     }
 
     private function addGithubWorkflowDirectory(): void
@@ -67,24 +129,41 @@ class GithubWorkflowService
 
     private function addGithubTestAction(): void
     {
-        $githubTestActionExists = $this->fs->exists($this->workflowPath . 'test.yaml');
-        $override               = true;
+        $this->setupAndCopyAction(
+            fileName: 'test.yaml',
+            questionMessage: 'It seems that github action for test already exists, do you want to override?',
+            overrideCommentMessage: 'Adding github action for phpunit and code coverage',
+            skippedMessage: 'Skipped creation of github action for phpunit and code coverage'
+        );
+    }
 
-        if ($githubTestActionExists) {
-            $override = $this->io->confirm(
-                question: 'It seems that github action for test already exists, do you want to override?',
-                default: false
-            );
-        }
+    private function addGoogleGKEDeployAction(): void
+    {
+        $this->setupAndCopyAction(
+            fileName: 'deploy_google_gke.yaml',
+            questionMessage: 'It seems that github action for deploy on Google Kubernetes Engine already exists, do you want to override?',
+            overrideCommentMessage: 'Adding Google GKE Deploy action',
+            skippedMessage: 'Skipped creation of Google GKE Deploy action'
+        );
+    }
 
-        if ($override) {
-            $this->io->comment('Adding Github Action for PHPUnit Test and code coverage');
-            $this->fs->copy(
-                originFile: Path::normalize('dist/workflow/test.yaml'),
-                targetFile: $this->workflowPath . 'test.yaml',
-                overwriteNewerFiles: true
-            );
-            $this->io->warning('Remember to add your Codecov Token in Github Secrets');
-        }
+    private function addAmazonECSDeployAction(): void
+    {
+        $this->setupAndCopyAction(
+            fileName: 'deploy_aws_ecs.yaml',
+            questionMessage: 'It seems that github action for deploy on Amazon ECS already exists, do you want to override?',
+            overrideCommentMessage: 'Adding Amazon ECS Deploy action',
+            skippedMessage: 'Skipped creation of Amazon ECS Deploy action'
+        );
+    }
+
+    private function addTerraformDeployAction(): void
+    {
+        $this->setupAndCopyAction(
+            fileName: 'terraform.yaml',
+            questionMessage: 'It seems that github action for deploy on terraform already exists, do you want to override?',
+            overrideCommentMessage: 'Adding Terraform Deploy action',
+            skippedMessage: 'Skipped creation of Terraform Deploy action'
+        );
     }
 }
