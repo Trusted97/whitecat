@@ -10,7 +10,7 @@
 6. Push to the branch (`git push origin feat/new-feature`)
 7. Open a pull request
 
-## Working with Docker
+## Working with Docker 🐳
 
 This project provides a Docker setup that allows working on it using any of the supported PHP versions.
 
