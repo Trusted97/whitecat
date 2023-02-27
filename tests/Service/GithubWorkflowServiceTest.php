@@ -25,6 +25,7 @@ class GithubWorkflowServiceTest extends TestCase
     public function testConstruct(): void
     {
         $githubWorkflowService = new GithubWorkflowService($this->symfonyStyle, $this->filesystem);
+        $this->assertNotNull($githubWorkflowService);
         $this->assertInstanceOf(GithubWorkflowService::class, $githubWorkflowService);
     }
 
@@ -32,6 +33,7 @@ class GithubWorkflowServiceTest extends TestCase
     {
         $githubWorkflowService = new GithubWorkflowService($this->symfonyStyle, $this->filesystem);
         $statusCode            = $githubWorkflowService->run();
+        $this->assertNotNull($statusCode);
         $this->assertSame(0, $statusCode);
     }
 }
