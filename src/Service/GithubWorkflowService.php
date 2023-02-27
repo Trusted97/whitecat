@@ -2,6 +2,7 @@
 
 namespace Whitecat\Service;
 
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -63,6 +64,7 @@ class GithubWorkflowService
         return Command::SUCCESS;
     }
 
+    #[CodeCoverageIgnore]
     protected function setupAndCopyAction(
         string $fileName,
         string $questionMessage,
@@ -91,6 +93,7 @@ class GithubWorkflowService
         }
     }
 
+    #[CodeCoverageIgnore]
     private function addGithubWorkflowDirectory(): void
     {
         $workflowDirectoryExists = $this->fs->exists($this->workflowPath);
@@ -127,6 +130,7 @@ class GithubWorkflowService
         }
     }
 
+    #[CodeCoverageIgnore]
     private function addGithubTestAction(): void
     {
         $this->setupAndCopyAction(
@@ -137,6 +141,7 @@ class GithubWorkflowService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addGoogleGKEDeployAction(): void
     {
         $this->setupAndCopyAction(
@@ -147,6 +152,7 @@ class GithubWorkflowService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addAmazonECSDeployAction(): void
     {
         $this->setupAndCopyAction(
@@ -157,6 +163,7 @@ class GithubWorkflowService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addTerraformDeployAction(): void
     {
         $this->setupAndCopyAction(
