@@ -1,6 +1,6 @@
 # Whitecat 🐱
 ![CI](https://github.com/Trusted97/whitecat/workflows/test/badge.svg)
-[![codecov](https://codecov.io/gh/Trusted97/whitecat/branch/master/graph/badge.svg?token=8H5dESJuiq)](https://codecov.io/gh/immobiliare/braze-php-sdk)
+[![codecov](https://codecov.io/gh/Trusted97/whitecat/branch/master/graph/badge.svg)](https://codecov.io/gh/Trusted97/whitecat)
 
 > Developer toolbox for avoid boring setup during development
 
