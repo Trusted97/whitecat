@@ -16,7 +16,7 @@ class GithubWorkflowService
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
-        $this->workflowPath = Path::normalize('.github/workflow/');
+        $this->workflowPath = Path::normalize('.github/workflows/');
     }
 
     public function run(): int
@@ -63,7 +63,7 @@ class GithubWorkflowService
         return Command::SUCCESS;
     }
 
-    private function setupAndCopyAction(
+    protected function setupAndCopyAction(
         string $fileName,
         string $questionMessage,
         string $overrideCommentMessage,
@@ -82,7 +82,7 @@ class GithubWorkflowService
         if ($override) {
             $this->io->comment($overrideCommentMessage);
             $this->fs->copy(
-                originFile: Path::normalize('dist/workflow/' . $fileName),
+                originFile: Path::normalize('dist/workflows/' . $fileName),
                 targetFile: $this->workflowPath . $fileName,
                 overwriteNewerFiles: true
             );
