@@ -5,12 +5,14 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use Whitecat\Command\DockerCommand;
 use Whitecat\Command\GithubWorkflowCommand;
 
 $application = new Application();
 
 try {
     $application->add(new GithubWorkflowCommand());
+    $application->add(new DockerCommand());
     $application->run();
 } catch (Exception $e) {
     echo \sprintf('Error code: %d , Error type: %s', $e->getCode(), $e->getMessage());

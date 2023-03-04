@@ -7,7 +7,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 
-class CopyWorkflowHelper
+class CopyHelper
 {
     public function __construct(
         protected readonly SymfonyStyle $io,
@@ -21,9 +21,10 @@ class CopyWorkflowHelper
         string $questionMessage,
         string $overrideCommentMessage,
         string $skippedMessage,
-        string $workflowPath
+        string $sourceFileDirectory,
+        string $distFileDirectory
     ): void {
-        $checkExists = $this->fs->exists($workflowPath . $fileName);
+        $checkExists = $this->fs->exists($sourceFileDirectory . $fileName);
         $override    = true;
 
         if ($checkExists) {
@@ -36,8 +37,8 @@ class CopyWorkflowHelper
         if ($override) {
             $this->io->comment($overrideCommentMessage);
             $this->fs->copy(
-                originFile: Path::normalize('dist/workflows/' . $fileName),
-                targetFile: $workflowPath . $fileName,
+                originFile: Path::normalize($distFileDirectory . $fileName),
+                targetFile: $sourceFileDirectory . $fileName,
                 overwriteNewerFiles: true
             );
         } else {

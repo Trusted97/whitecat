@@ -8,19 +8,20 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
-use Whitecat\Helper\CopyWorkflowHelper;
+use Whitecat\Enums\DirectoryPath;
+use Whitecat\Helper\CopyHelper;
 
 class GithubWorkflowService
 {
     protected readonly string $workflowPath;
-    protected CopyWorkflowHelper $copyWorkflowHelper;
+    protected CopyHelper $copyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
-        $this->workflowPath       = Path::normalize('.github/workflows/');
-        $this->copyWorkflowHelper = new CopyWorkflowHelper($this->io, $this->fs);
+        $this->workflowPath = Path::normalize(DirectoryPath::WORKFLOW->value);
+        $this->copyHelper   = new CopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
@@ -107,48 +108,52 @@ class GithubWorkflowService
     #[CodeCoverageIgnore]
     private function addGithubTestAction(): void
     {
-        $this->copyWorkflowHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyAction(
             fileName: 'test.yaml',
             questionMessage: 'It seems that github action for test already exists, do you want to override?',
             overrideCommentMessage: 'Adding github action for phpunit and code coverage',
             skippedMessage: 'Skipped creation of github action for phpunit and code coverage',
-            workflowPath: $this->workflowPath
+            sourceFileDirectory: $this->workflowPath,
+            distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }
 
     #[CodeCoverageIgnore]
     private function addGoogleGKEDeployAction(): void
     {
-        $this->copyWorkflowHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyAction(
             fileName: 'deploy_google_gke.yaml',
             questionMessage: 'It seems that github action for deploy on Google Kubernetes Engine already exists, do you want to override?',
             overrideCommentMessage: 'Adding Google GKE Deploy action',
             skippedMessage: 'Skipped creation of Google GKE Deploy action',
-            workflowPath: $this->workflowPath
+            sourceFileDirectory: $this->workflowPath,
+            distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }
 
     #[CodeCoverageIgnore]
     private function addAmazonECSDeployAction(): void
     {
-        $this->copyWorkflowHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyAction(
             fileName: 'deploy_aws_ecs.yaml',
             questionMessage: 'It seems that github action for deploy on Amazon ECS already exists, do you want to override?',
             overrideCommentMessage: 'Adding Amazon ECS Deploy action',
             skippedMessage: 'Skipped creation of Amazon ECS Deploy action',
-            workflowPath: $this->workflowPath
+            sourceFileDirectory: $this->workflowPath,
+            distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }
 
     #[CodeCoverageIgnore]
     private function addTerraformDeployAction(): void
     {
-        $this->copyWorkflowHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyAction(
             fileName: 'terraform.yaml',
             questionMessage: 'It seems that github action for deploy on terraform already exists, do you want to override?',
             overrideCommentMessage: 'Adding Terraform Deploy action',
             skippedMessage: 'Skipped creation of Terraform Deploy action',
-            workflowPath: $this->workflowPath
+            sourceFileDirectory: $this->workflowPath,
+            distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }
 }
