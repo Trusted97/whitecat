@@ -3,6 +3,11 @@
     "description": "Developer toolbox for avoid boring setup during development",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "dev",
+        "developer-experience",
+        "cli-library"
+    ],
     "autoload": {
         "psr-4": {
             "Whitecat\\": "src/"
