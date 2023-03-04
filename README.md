@@ -10,6 +10,10 @@ setup in developing of PHP: Packages, Library, Composer Plugin or everything you
 ## Table of Contents
 
 - [Install](#install)
+  - [Usage](#usage) 
+    - [Docker setup](#docker-setup)
+    - [GitHub Workflow](#github-workflows) 
+    - [GitHub Issue](#github-issue)  
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -31,6 +35,44 @@ In Shell
 ``` sh
 composer require --dev whitecat/whitecat
 ```
+
+### Usage
+
+This command list all possible command available in whitecat
+
+``` sh
+vendor/bin/whitecat list
+```
+
+#### Docker setup
+
+This command setup basic docker environment for your library
+
+``` sh
+vendor/bin/whitecat docker:setup
+```
+
+#### GitHub Workflows
+
+This command setup basic workflows for GitHub through actions
+
+``` sh
+vendor/bin/whitecat github:workflow
+```
+
+#### GitHub Issue
+
+This command setup basic issue template for your library
+
+``` sh
+vendor/bin/whitecat github:issue
+```
+
+## Compatibility
+
+| Version | Status     | PHP compatibility | 
+|---------|------------|-------------------|
+| 1.x     | maintained | `^8.1`            |
 
 ## Contributing
 
