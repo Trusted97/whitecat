@@ -28,7 +28,7 @@ class DockerService
 
     public function run(): int
     {
-        $this->io->title('Docker setup');
+        $this->io->title('Github workflow');
 
         $this->addDockerDirectory();
         $this->addDockerCompose();
