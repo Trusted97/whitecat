@@ -1,6 +1,9 @@
 # Whitecat 🐱
 ![CI](https://github.com/Trusted97/whitecat/workflows/test/badge.svg)
 [![codecov](https://codecov.io/gh/Trusted97/whitecat/branch/master/graph/badge.svg?token=URCWOH9JFR)](https://codecov.io/gh/Trusted97/whitecat)
+![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/whitecat/whitecat/php)
+![GitHub](https://img.shields.io/github/license/Trusted97/whitecat)
+![Packagist Version](https://img.shields.io/packagist/v/whitecat/whitecat)
 
 > Developer toolbox for avoid boring setup during development
 
