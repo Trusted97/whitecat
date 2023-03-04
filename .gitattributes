@@ -1,0 +1,6 @@
+/.* export-ignore
+/docker/ export-ignore
+/docker-compose.yaml export-ignore
+/phpunit.xml.dist export-ignore
+/php-cs-fixer.dist.php export-ignore
+/tests/ export-ignore

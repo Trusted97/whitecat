@@ -8,6 +8,12 @@
         "developer-experience",
         "cli-library"
     ],
+    "authors": [
+        {
+            "name": "Gianluca Benucci",
+            "email": "info@gianlucabenucci.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Whitecat\\": "src/"
