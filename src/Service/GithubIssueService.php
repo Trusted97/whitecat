@@ -31,6 +31,7 @@ class GithubIssueService
         $this->addDockerDirectory();
         $this->addBugReportIssue();
         $this->addFeatureRequestIssue();
+        $this->addIssueConfigFile();
 
         $this->io->success('All work was correctly done!');
 
@@ -95,6 +96,18 @@ class GithubIssueService
             questionMessage: 'It seems that a feature request issue already exists, do you want to override?',
             overrideCommentMessage: 'Adding FEATURE-REQUEST.yml',
             skippedMessage: 'Skipped creation of FEATURE-REQUEST.yml',
+            sourceFileDirectory: $this->githubIssueDirectoryPath,
+            distFileDirectory: DirectoryPath::DIST_ISSUE->value
+        );
+    }
+
+    private function addIssueConfigFile(): void
+    {
+        $this->copyHelper->setupAndCopyAction(
+            fileName: 'config.yml',
+            questionMessage: 'It seems that a config file for issue already exists, do you want to override?',
+            overrideCommentMessage: 'Adding config.yml',
+            skippedMessage: 'Skipped creation of config.yml',
             sourceFileDirectory: $this->githubIssueDirectoryPath,
             distFileDirectory: DirectoryPath::DIST_ISSUE->value
         );
