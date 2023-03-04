@@ -11,27 +11,26 @@ use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
 use Whitecat\Helper\CopyHelper;
 
-class DockerService
+class GithubIssueService
 {
-    protected readonly string $dockerComposePath;
-    protected readonly string $dockerDirectoryPath;
+    protected readonly string $githubIssueDirectoryPath;
     protected CopyHelper $copyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
-        $this->dockerComposePath   = Path::normalize(DirectoryPath::DOCKER_COMPOSE->value);
-        $this->dockerDirectoryPath = Path::normalize(DirectoryPath::DOCKER->value);
-        $this->copyHelper          = new CopyHelper($this->io, $this->fs);
+        $this->githubIssueDirectoryPath   = Path::normalize(DirectoryPath::ISSUE->value);
+        $this->copyHelper                 = new CopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
     {
-        $this->io->title('Github workflow');
+        $this->io->title('Github issue');
 
         $this->addDockerDirectory();
-        $this->addDockerCompose();
+        $this->addBugReportIssue();
+        $this->addFeatureRequestIssue();
 
         $this->io->success('All work was correctly done!');
 
@@ -41,20 +40,20 @@ class DockerService
     #[CodeCoverageIgnore]
     private function addDockerDirectory(): void
     {
-        $dockerDirectoryExists   = $this->fs->exists($this->dockerDirectoryPath);
-        $override                = true;
+        $githubIssueDirectoryExists   = $this->fs->exists($this->githubIssueDirectoryPath);
+        $override                     = true;
 
-        if ($dockerDirectoryExists) {
+        if ($githubIssueDirectoryExists) {
             $override = $this->io->confirm(
-                question: 'It seems that docker directory already exists, do you want to continue?',
+                question: 'It seems that github issue directory already exists, do you want to continue?',
                 default: false
             );
         }
 
         if ($override) {
             try {
-                $this->fs->mkdir($this->dockerDirectoryPath);
-                $this->io->comment('Docker directory created');
+                $this->fs->mkdir($this->githubIssueDirectoryPath);
+                $this->io->comment('Github issue directory created');
             } catch (IOExceptionInterface $IOException) {
                 $this->io->error(
                     \sprintf(
@@ -71,20 +70,33 @@ class DockerService
                 );
             }
         } else {
-            $this->io->comment('Skipped creation of docker directory');
+            $this->io->comment('Skipped creation of Github issue directory');
         }
     }
 
     #[CodeCoverageIgnore]
-    private function addDockerCompose(): void
+    private function addBugReportIssue(): void
     {
         $this->copyHelper->setupAndCopyAction(
-            fileName: 'docker-compose.yml',
-            questionMessage: 'It seems that a docker-compose.yml already exists, do you want to override?',
-            overrideCommentMessage: 'Adding docker-compose.yml',
-            skippedMessage: 'Skipped creation of docker-compose.yml',
-            sourceFileDirectory: '',
-            distFileDirectory: DirectoryPath::DIST_DOCKER->value
+            fileName: 'BUG-REPORT.yml',
+            questionMessage: 'It seems that a bug report issue already exists, do you want to override?',
+            overrideCommentMessage: 'Adding BUG-REPORT.yml',
+            skippedMessage: 'Skipped creation of BUG-REPORT.yml',
+            sourceFileDirectory: $this->githubIssueDirectoryPath,
+            distFileDirectory: DirectoryPath::DIST_ISSUE->value
+        );
+    }
+
+    #[CodeCoverageIgnore]
+    private function addFeatureRequestIssue(): void
+    {
+        $this->copyHelper->setupAndCopyAction(
+            fileName: 'FEATURE-REQUEST.yml',
+            questionMessage: 'It seems that a feature request issue already exists, do you want to override?',
+            overrideCommentMessage: 'Adding FEATURE-REQUEST.yml',
+            skippedMessage: 'Skipped creation of FEATURE-REQUEST.yml',
+            sourceFileDirectory: $this->githubIssueDirectoryPath,
+            distFileDirectory: DirectoryPath::DIST_ISSUE->value
         );
     }
 }

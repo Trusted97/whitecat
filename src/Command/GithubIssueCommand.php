@@ -8,20 +8,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
-use Whitecat\Service\GithubWorkflowService;
+use Whitecat\Service\GithubIssueService;
 
 #[AsCommand(
-    name: 'github:workflow',
-    description: 'Generate basic workflow for PHP library',
+    name: 'github:issue',
+    description: 'Generate basic template for Github issue',
     hidden: false
 )]
-class GithubWorkflowCommand extends Command
+class GithubIssueCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $fs = new Filesystem();
 
-        return (new GithubWorkflowService($io, $fs))->run();
+        return (new GithubIssueService($io, $fs))->run();
     }
 }

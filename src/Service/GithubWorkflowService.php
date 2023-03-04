@@ -13,15 +13,15 @@ use Whitecat\Helper\CopyHelper;
 
 class GithubWorkflowService
 {
-    protected readonly string $workflowPath;
+    protected readonly string $workflowDirectoryPath;
     protected CopyHelper $copyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
-        $this->workflowPath = Path::normalize(DirectoryPath::WORKFLOW->value);
-        $this->copyHelper   = new CopyHelper($this->io, $this->fs);
+        $this->workflowDirectoryPath = Path::normalize(DirectoryPath::WORKFLOW->value);
+        $this->copyHelper            = new CopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
@@ -71,7 +71,7 @@ class GithubWorkflowService
     #[CodeCoverageIgnore]
     private function addGithubWorkflowDirectory(): void
     {
-        $workflowDirectoryExists = $this->fs->exists($this->workflowPath);
+        $workflowDirectoryExists = $this->fs->exists($this->workflowDirectoryPath);
         $override                = true;
 
         if ($workflowDirectoryExists) {
@@ -83,7 +83,7 @@ class GithubWorkflowService
 
         if ($override) {
             try {
-                $this->fs->mkdir($this->workflowPath);
+                $this->fs->mkdir($this->workflowDirectoryPath);
                 $this->io->comment('Github workflow directory created');
             } catch (IOExceptionInterface $IOException) {
                 $this->io->error(
@@ -113,7 +113,7 @@ class GithubWorkflowService
             questionMessage: 'It seems that github action for test already exists, do you want to override?',
             overrideCommentMessage: 'Adding github action for phpunit and code coverage',
             skippedMessage: 'Skipped creation of github action for phpunit and code coverage',
-            sourceFileDirectory: $this->workflowPath,
+            sourceFileDirectory: $this->workflowDirectoryPath,
             distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }
@@ -126,7 +126,7 @@ class GithubWorkflowService
             questionMessage: 'It seems that github action for deploy on Google Kubernetes Engine already exists, do you want to override?',
             overrideCommentMessage: 'Adding Google GKE Deploy action',
             skippedMessage: 'Skipped creation of Google GKE Deploy action',
-            sourceFileDirectory: $this->workflowPath,
+            sourceFileDirectory: $this->workflowDirectoryPath,
             distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }
@@ -139,7 +139,7 @@ class GithubWorkflowService
             questionMessage: 'It seems that github action for deploy on Amazon ECS already exists, do you want to override?',
             overrideCommentMessage: 'Adding Amazon ECS Deploy action',
             skippedMessage: 'Skipped creation of Amazon ECS Deploy action',
-            sourceFileDirectory: $this->workflowPath,
+            sourceFileDirectory: $this->workflowDirectoryPath,
             distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }
@@ -152,7 +152,7 @@ class GithubWorkflowService
             questionMessage: 'It seems that github action for deploy on terraform already exists, do you want to override?',
             overrideCommentMessage: 'Adding Terraform Deploy action',
             skippedMessage: 'Skipped creation of Terraform Deploy action',
-            sourceFileDirectory: $this->workflowPath,
+            sourceFileDirectory: $this->workflowDirectoryPath,
             distFileDirectory: DirectoryPath::DIST_WORKFLOW->value
         );
     }

@@ -6,12 +6,14 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 use Whitecat\Command\DockerCommand;
+use Whitecat\Command\GithubIssueCommand;
 use Whitecat\Command\GithubWorkflowCommand;
 
 $application = new Application();
 
 try {
     $application->add(new GithubWorkflowCommand());
+    $application->add(new GithubIssueCommand());
     $application->add(new DockerCommand());
     $application->run();
 } catch (Exception $e) {
