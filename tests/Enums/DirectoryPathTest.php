@@ -2,8 +2,8 @@
 
 namespace Whitecat\Test\Enums;
 
-use Whitecat\Enums\DirectoryPath;
 use PHPUnit\Framework\TestCase;
+use Whitecat\Enums\DirectoryPath;
 
 class DirectoryPathTest extends TestCase
 {
