@@ -37,6 +37,9 @@
     "bin": [
         "whitecat"
     ],
+    "config": {
+        "sort-packages": true
+    },
     "scripts": {
         "test": "vendor/bin/phpunit -c phpunit.xml --no-coverage",
         "test-coverage-text": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --colors=never --coverage-text",
