@@ -37,7 +37,7 @@ class CopyHelper
         if ($override) {
             $this->io->comment($overrideCommentMessage);
             $this->fs->copy(
-                originFile: Path::normalize($distFileDirectory . $fileName),
+                originFile: Path::normalize(__DIR__ . '/../../' . $distFileDirectory . $fileName),
                 targetFile: $sourceFileDirectory . $fileName,
                 overwriteNewerFiles: true
             );

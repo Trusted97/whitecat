@@ -65,7 +65,7 @@ class DockerService
             } catch (\Exception $commandException) {
                 $this->io->error(
                     \sprintf(
-                        'An error occurred while executing github:workflow command %s',
+                        'An error occurred while executing docker:setup command %s',
                         $commandException->getMessage()
                     )
                 );
