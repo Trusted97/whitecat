@@ -1,8 +1,63 @@
 #!/usr/bin/env php
 <?php
-// application.php
 
-require __DIR__ . '/vendor/autoload.php';
+if (!\version_compare(\PHP_VERSION, \PHP_VERSION, '=')) {
+    \fwrite(
+        \STDERR,
+        \sprintf(
+            '%s declares an invalid value for PHP_VERSION.' . \PHP_EOL .
+            'This breaks fundamental functionality such as version_compare().' . \PHP_EOL .
+            'Please use a different PHP interpreter.' . \PHP_EOL,
+
+            \PHP_BINARY
+        )
+    );
+
+    exit(1);
+}
+
+if (\version_compare('8.1.0', \PHP_VERSION, '>')) {
+    \fwrite(
+        \STDERR,
+        \sprintf(
+            'This version of Whitecat requires PHP >= 8.1.' . \PHP_EOL .
+            'You are using PHP %s (%s).' . \PHP_EOL,
+            \PHP_VERSION,
+            \PHP_BINARY
+        )
+    );
+
+    exit(1);
+}
+
+if (isset($GLOBALS['_composer_autoload_path'])) {
+    \define('WHITECAT_COMPOSER_INSTALL', $GLOBALS['_composer_autoload_path']);
+
+    unset($GLOBALS['_composer_autoload_path']);
+} else {
+    foreach ([__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php'] as $file) {
+        if (\file_exists($file)) {
+            \define('WHITECAT_COMPOSER_INSTALL', $file);
+
+            break;
+        }
+    }
+
+    unset($file);
+}
+
+if (!\defined('WHITECAT_COMPOSER_INSTALL')) {
+    \fwrite(
+        \STDERR,
+        'You need to set up the project dependencies using Composer:' . \PHP_EOL . \PHP_EOL .
+        '    composer install' . \PHP_EOL . \PHP_EOL .
+        'You can learn all about Composer on https://getcomposer.org/.' . \PHP_EOL
+    );
+
+    exit(1);
+}
+
+require WHITECAT_COMPOSER_INSTALL;
 
 use Symfony\Component\Console\Application;
 use Whitecat\Command\DockerCommand;
