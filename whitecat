@@ -8,7 +8,6 @@ if (!\version_compare(\PHP_VERSION, \PHP_VERSION, '=')) {
             '%s declares an invalid value for PHP_VERSION.' . \PHP_EOL .
             'This breaks fundamental functionality such as version_compare().' . \PHP_EOL .
             'Please use a different PHP interpreter.' . \PHP_EOL,
-
             \PHP_BINARY
         )
     );
@@ -62,14 +61,16 @@ require WHITECAT_COMPOSER_INSTALL;
 use Symfony\Component\Console\Application;
 use Whitecat\Command\DockerCommand;
 use Whitecat\Command\GithubIssueCommand;
+use Whitecat\Command\GithubPullCommand;
 use Whitecat\Command\GithubWorkflowCommand;
 
 $application = new Application();
 
 try {
-    $application->add(new GithubWorkflowCommand());
-    $application->add(new GithubIssueCommand());
     $application->add(new DockerCommand());
+    $application->add(new GithubIssueCommand());
+    $application->add(new GithubPullCommand());
+    $application->add(new GithubWorkflowCommand());
     $application->run();
 } catch (Exception $e) {
     echo \sprintf('Error code: %d , Error type: %s', $e->getCode(), $e->getMessage());

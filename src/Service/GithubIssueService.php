@@ -28,7 +28,7 @@ class GithubIssueService
     {
         $this->io->title('Github issue');
 
-        $this->addDockerDirectory();
+        $this->addGithubIssueDirectory();
         $this->addBugReportIssue();
         $this->addFeatureRequestIssue();
         $this->addIssueConfigFile();
@@ -39,7 +39,7 @@ class GithubIssueService
     }
 
     #[CodeCoverageIgnore]
-    private function addDockerDirectory(): void
+    private function addGithubIssueDirectory(): void
     {
         $githubIssueDirectoryExists   = $this->fs->exists($this->githubIssueDirectoryPath);
         $override                     = true;
@@ -65,7 +65,7 @@ class GithubIssueService
             } catch (\Exception $commandException) {
                 $this->io->error(
                     \sprintf(
-                        'An error occurred while executing github:workflow command %s',
+                        'An error occurred while executing github:issue command %s',
                         $commandException->getMessage()
                     )
                 );

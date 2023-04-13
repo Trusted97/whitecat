@@ -18,6 +18,7 @@ setup in developing of PHP: Packages, Library, Composer Plugin or everything you
     - [Docker setup](#docker-setup)
     - [GitHub Workflow](#github-workflows) 
     - [GitHub Issue](#github-issue)  
+    - [GitHub Pull](#github-pull)  
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -70,6 +71,14 @@ This command setup basic issue template for your library
 
 ``` sh
 vendor/bin/whitecat github:issue
+```
+
+#### GitHub Pull
+
+This command setup basic pull request template for your library
+
+``` sh
+vendor/bin/whitecat github:pull
 ```
 
 ## Compatibility
