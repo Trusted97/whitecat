@@ -28,7 +28,7 @@ In composer.json
 
 ``` json
 "require-dev": {
-    "whitecat/whitecat": "^1.0.0"
+    "trusted97/whitecat": "^1.0.0"
 },
 ```
 
@@ -37,7 +37,7 @@ Or
 In Shell
 
 ``` sh
-composer require --dev whitecat/whitecat
+composer require --dev trusted97/whitecat
 ```
 
 ### Usage
