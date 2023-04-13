@@ -78,7 +78,7 @@ class GithubIssueService
     #[CodeCoverageIgnore]
     private function addBugReportIssue(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'BUG-REPORT.yml',
             questionMessage: 'It seems that a bug report issue already exists, do you want to override?',
             overrideCommentMessage: 'Adding BUG-REPORT.yml',
@@ -91,7 +91,7 @@ class GithubIssueService
     #[CodeCoverageIgnore]
     private function addFeatureRequestIssue(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'FEATURE-REQUEST.yml',
             questionMessage: 'It seems that a feature request issue already exists, do you want to override?',
             overrideCommentMessage: 'Adding FEATURE-REQUEST.yml',
@@ -103,7 +103,7 @@ class GithubIssueService
 
     private function addIssueConfigFile(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'config.yml',
             questionMessage: 'It seems that a config file for issue already exists, do you want to override?',
             overrideCommentMessage: 'Adding config.yml',

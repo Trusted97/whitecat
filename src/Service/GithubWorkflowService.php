@@ -108,7 +108,7 @@ class GithubWorkflowService
     #[CodeCoverageIgnore]
     private function addGithubTestAction(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'test.yaml',
             questionMessage: 'It seems that github action for test already exists, do you want to override?',
             overrideCommentMessage: 'Adding github action for phpunit and code coverage',
@@ -121,7 +121,7 @@ class GithubWorkflowService
     #[CodeCoverageIgnore]
     private function addGoogleGKEDeployAction(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'deploy_google_gke.yaml',
             questionMessage: 'It seems that github action for deploy on Google Kubernetes Engine already exists, do you want to override?',
             overrideCommentMessage: 'Adding Google GKE Deploy action',
@@ -134,7 +134,7 @@ class GithubWorkflowService
     #[CodeCoverageIgnore]
     private function addAmazonECSDeployAction(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'deploy_aws_ecs.yaml',
             questionMessage: 'It seems that github action for deploy on Amazon ECS already exists, do you want to override?',
             overrideCommentMessage: 'Adding Amazon ECS Deploy action',
@@ -147,7 +147,7 @@ class GithubWorkflowService
     #[CodeCoverageIgnore]
     private function addTerraformDeployAction(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'terraform.yaml',
             questionMessage: 'It seems that github action for deploy on terraform already exists, do you want to override?',
             overrideCommentMessage: 'Adding Terraform Deploy action',

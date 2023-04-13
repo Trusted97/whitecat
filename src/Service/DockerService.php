@@ -15,15 +15,17 @@ class DockerService
 {
     protected readonly string $dockerComposePath;
     protected readonly string $dockerDirectoryPath;
+    protected readonly string $dockerDistDirectoryPath;
     protected CopyHelper $copyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
-        $this->dockerComposePath   = Path::normalize(DirectoryPath::DOCKER_COMPOSE->value);
-        $this->dockerDirectoryPath = Path::normalize(DirectoryPath::DOCKER->value);
-        $this->copyHelper          = new CopyHelper($this->io, $this->fs);
+        $this->dockerComposePath       = Path::normalize(DirectoryPath::DOCKER_COMPOSE->value);
+        $this->dockerDirectoryPath     = Path::normalize(DirectoryPath::DOCKER->value);
+        $this->dockerDistDirectoryPath = Path::normalize(DirectoryPath::DIST_DOCKER->value);
+        $this->copyHelper              = new CopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
@@ -73,12 +75,20 @@ class DockerService
         } else {
             $this->io->comment('Skipped creation of docker directory');
         }
+
+        $this->copyHelper->setupAndCopyDirectory(
+            questionMessage: 'It seems that config for PHP 8.1 already exists, do you want to override?',
+            overrideCommentMessage: 'Adding PHP 8.1 config',
+            skippedMessage: 'Skipped creation of PHP 8.1 config',
+            sourceDirectory: $this->dockerDirectoryPath . 'php-8.1',
+            distDirectory: $this->dockerDistDirectoryPath . 'php-8.1'
+        );
     }
 
     #[CodeCoverageIgnore]
     private function addDockerCompose(): void
     {
-        $this->copyHelper->setupAndCopyAction(
+        $this->copyHelper->setupAndCopyFile(
             fileName: 'docker-compose.yml',
             questionMessage: 'It seems that a docker-compose.yml already exists, do you want to override?',
             overrideCommentMessage: 'Adding docker-compose.yml',
