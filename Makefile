@@ -2,6 +2,10 @@ docker-build:
 	@echo "Building docker container from docker-compose.yml"
 	docker compose up --build -d
 
+docker-clean-build:
+	@echo "Building clean docker container from docker-compose.yml"
+	docker compose up --build -d --force-recreate --remove-orphans
+
 docker-shell:
 	@echo "Open shell in container"
 	docker exec -it whitecat-81 sh

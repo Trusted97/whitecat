@@ -31,6 +31,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.14",
+        "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10",
         "symfony/var-dumper": "^6.2"
     },
@@ -45,6 +46,8 @@
         "test-coverage-text": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --colors=never --coverage-text",
         "test-coverage-html": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html coverage",
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --verbose",
-        "php-cs-fixer-dry-run": "vendor/bin/php-cs-fixer fix --verbose --diff --dry-run"
+        "php-cs-fixer-dry-run": "vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
+        "phpstan" : "vendor/bin/phpstan analyse src -l 9",
+        "phpstan-test" : "vendor/bin/phpstan analyse tests -l 9"
     }
 }
