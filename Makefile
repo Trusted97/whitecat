@@ -21,3 +21,11 @@ test:
 php-cs-fixer:
 	@echo "Launching php-cs-fixer"
 	docker exec -it whitecat-81 composer php-cs-fixer
+
+phpstan:
+	@echo "Launching php-cs-fixer"
+	docker exec -it whitecat-81 composer phpstan
+
+phpstan-test:
+	@echo "Launching php-cs-fixer"
+	docker exec -it whitecat-81 composer phpstan-test
