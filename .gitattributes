@@ -1,6 +1,9 @@
-/.* export-ignore
-/docker/ export-ignore
-/docker-compose.yaml export-ignore
-/phpunit.xml.dist export-ignore
-/php-cs-fixer.dist.php export-ignore
-/tests/ export-ignore
+/.*                     export-ignore
+/docker/                export-ignore
+/docker-compose.yaml    export-ignore
+/phpunit.xml            export-ignore
+/php-cs-fixer.dist.php  export-ignore
+/tests/                 export-ignore
+/.github                export-ignore
+/.gitattributes         export-ignore
+/.gitignore             export-ignore
