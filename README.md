@@ -5,6 +5,7 @@
 ![GitHub](https://img.shields.io/github/license/Trusted97/whitecat)
 ![Packagist Version](https://img.shields.io/packagist/v/trusted97/whitecat)
 [![justforfunnoreally.dev badge](https://img.shields.io/badge/justforfunnoreally-dev-9ff)](https://justforfunnoreally.dev)
+[![PHPStan Enabled](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://phpstan.org/)
 
 > Developer toolbox for avoid boring setup during development
 
