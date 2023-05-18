@@ -63,6 +63,7 @@ use Whitecat\Command\DockerCommand;
 use Whitecat\Command\GithubIssueCommand;
 use Whitecat\Command\GithubPullCommand;
 use Whitecat\Command\GithubWorkflowCommand;
+use Whitecat\Command\PhpCsFixerCommand;
 
 $application = new Application();
 
@@ -71,6 +72,7 @@ try {
     $application->add(new GithubIssueCommand());
     $application->add(new GithubPullCommand());
     $application->add(new GithubWorkflowCommand());
+    $application->add(new PhpCsFixerCommand());
     $application->run();
 } catch (Exception $e) {
     echo \sprintf('Error code: %d , Error type: %s', $e->getCode(), $e->getMessage());
