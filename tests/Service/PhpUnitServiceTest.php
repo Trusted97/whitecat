@@ -7,9 +7,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
-use Whitecat\Service\PhpCsFixerService;
+use Whitecat\Service\PhpUnitService;
 
-class PhpCsFixerServiceTest extends TestCase
+class PhpUnitServiceTest extends TestCase
 {
     private SymfonyStyle $symfonyStyle;
     private Filesystem $filesystem;
@@ -24,15 +24,15 @@ class PhpCsFixerServiceTest extends TestCase
 
     public function testConstruct(): void
     {
-        $phpCsFixerService = new PhpCsFixerService($this->symfonyStyle, $this->filesystem);
-        $this->assertNotNull($phpCsFixerService);
-        $this->assertInstanceOf(PhpCsFixerService::class, $phpCsFixerService);
+        $phpUnitService = new PhpUnitService($this->symfonyStyle, $this->filesystem);
+        $this->assertNotNull($phpUnitService);
+        $this->assertInstanceOf(PhpUnitService::class, $phpUnitService);
     }
 
     public function testRun(): void
     {
-        $phpCsFixerService     = new PhpCsFixerService($this->symfonyStyle, $this->filesystem);
-        $statusCode            = $phpCsFixerService->run();
+        $phpUnitService        = new PhpUnitService($this->symfonyStyle, $this->filesystem);
+        $statusCode            = $phpUnitService->run();
         $this->assertNotNull($statusCode);
         $this->assertSame(0, $statusCode);
     }

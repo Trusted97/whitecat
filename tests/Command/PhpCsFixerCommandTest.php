@@ -8,7 +8,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Whitecat\Command\PhpCsFixerCommand;
 
-class PhpCsFixerServiceTest extends TestCase
+class PhpCsFixerCommandTest extends TestCase
 {
     public function testExecute(): void
     {
