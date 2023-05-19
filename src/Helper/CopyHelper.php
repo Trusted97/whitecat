@@ -3,7 +3,6 @@
 namespace Whitecat\Helper;
 
 use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
-use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
