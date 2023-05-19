@@ -2,13 +2,12 @@
 
 namespace Whitecat\Helper;
 
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 
-#[IgnoreFunctionForCodeCoverage(functionName: 'setupAndCopyFile')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'setupAndCopyDirectory')]
 class CopyHelper
 {
     public function __construct(
@@ -17,6 +16,7 @@ class CopyHelper
     ) {
     }
 
+    #[CodeCoverageIgnore]
     public function setupAndCopyFile(
         string $fileName,
         string $questionMessage,
@@ -47,6 +47,7 @@ class CopyHelper
         }
     }
 
+    #[CodeCoverageIgnore]
     public function setupAndCopyDirectory(
         string $questionMessage,
         string $overrideCommentMessage,

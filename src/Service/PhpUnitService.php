@@ -2,7 +2,8 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+use PHPUnit\Framework\Attributes\IgnoreMethodForCodeCoverage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
@@ -12,8 +13,6 @@ use Whitecat\Exception\InvalidComposerException;
 use Whitecat\Helper\ComposerHelper;
 use Whitecat\Helper\CopyHelper;
 
-#[IgnoreFunctionForCodeCoverage(functionName: 'addPHPUnitConfigFile')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addTestDirectory')]
 class PhpUnitService
 {
     protected readonly string $workflowDirectoryPath;
@@ -67,6 +66,7 @@ class PhpUnitService
         return Command::SUCCESS;
     }
 
+    #[CodeCoverageIgnore]
     private function addPHPUnitConfigFile(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -79,6 +79,7 @@ class PhpUnitService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addTestDirectory(): void
     {
         $this->copyHelper->setupAndCopyDirectory(

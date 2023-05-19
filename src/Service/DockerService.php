@@ -2,6 +2,7 @@
 
 namespace Whitecat\Service;
 
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -11,8 +12,6 @@ use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
 use Whitecat\Helper\CopyHelper;
 
-#[IgnoreFunctionForCodeCoverage(functionName: 'addDockerDirectory')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addDockerCompose')]
 class DockerService
 {
     protected readonly string $dockerComposePath;
@@ -42,6 +41,7 @@ class DockerService
         return Command::SUCCESS;
     }
 
+    #[CodeCoverageIgnore]
     private function addDockerDirectory(): void
     {
         $dockerDirectoryExists   = $this->fs->exists($this->dockerDirectoryPath);
@@ -86,6 +86,7 @@ class DockerService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addDockerCompose(): void
     {
         $this->copyHelper->setupAndCopyFile(

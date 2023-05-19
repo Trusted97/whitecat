@@ -2,6 +2,7 @@
 
 namespace Whitecat\Service;
 
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -65,6 +66,7 @@ class PhpCsFixerService
         return Command::SUCCESS;
     }
 
+    #[CodeCoverageIgnore]
     private function addPhpCsFixer(): void
     {
         $this->copyHelper->setupAndCopyFile(

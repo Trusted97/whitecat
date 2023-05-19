@@ -2,6 +2,7 @@
 
 namespace Whitecat\Service;
 
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -11,10 +12,6 @@ use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
 use Whitecat\Helper\CopyHelper;
 
-#[IgnoreFunctionForCodeCoverage(functionName: 'addGithubPullDirectory')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addFixPullRequestTemplate')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addImprovementPullRequestTemplate')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addNewFeaturePullRequestTemplate')]
 class GithubPullService
 {
     protected readonly string $githubPullDirectoryPath;
@@ -42,6 +39,7 @@ class GithubPullService
         return Command::SUCCESS;
     }
 
+    #[CodeCoverageIgnore]
     private function addGithubPullDirectory(): void
     {
         $githubIssueDirectoryExists   = $this->fs->exists($this->githubPullDirectoryPath);
@@ -78,6 +76,7 @@ class GithubPullService
         }
     }
 
+    #[CodeCoverageIgnore]
     private function addFixPullRequestTemplate(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -90,6 +89,7 @@ class GithubPullService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addImprovementPullRequestTemplate(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -102,6 +102,7 @@ class GithubPullService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addNewFeaturePullRequestTemplate(): void
     {
         $this->copyHelper->setupAndCopyFile(

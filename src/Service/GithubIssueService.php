@@ -2,6 +2,7 @@
 
 namespace Whitecat\Service;
 
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -11,10 +12,6 @@ use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
 use Whitecat\Helper\CopyHelper;
 
-#[IgnoreFunctionForCodeCoverage(functionName: 'addGithubIssueDirectory')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addBugReportIssue')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addFeatureRequestIssue')]
-#[IgnoreFunctionForCodeCoverage(functionName: 'addIssueConfigFile')]
 class GithubIssueService
 {
     protected readonly string $githubIssueDirectoryPath;
@@ -42,6 +39,7 @@ class GithubIssueService
         return Command::SUCCESS;
     }
 
+    #[CodeCoverageIgnore]
     private function addGithubIssueDirectory(): void
     {
         $githubIssueDirectoryExists   = $this->fs->exists($this->githubIssueDirectoryPath);
@@ -78,6 +76,7 @@ class GithubIssueService
         }
     }
 
+    #[CodeCoverageIgnore]
     private function addBugReportIssue(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -90,6 +89,7 @@ class GithubIssueService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addFeatureRequestIssue(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -102,6 +102,7 @@ class GithubIssueService
         );
     }
 
+    #[CodeCoverageIgnore]
     private function addIssueConfigFile(): void
     {
         $this->copyHelper->setupAndCopyFile(
