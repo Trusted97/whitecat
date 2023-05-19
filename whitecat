@@ -64,6 +64,7 @@ use Whitecat\Command\GithubIssueCommand;
 use Whitecat\Command\GithubPullCommand;
 use Whitecat\Command\GithubWorkflowCommand;
 use Whitecat\Command\PhpCsFixerCommand;
+use Whitecat\Command\PhpUnitCommand;
 
 $application = new Application();
 
@@ -73,6 +74,7 @@ try {
     $application->add(new GithubPullCommand());
     $application->add(new GithubWorkflowCommand());
     $application->add(new PhpCsFixerCommand());
+    $application->add(new PhpUnitCommand());
     $application->run();
 } catch (Exception $e) {
     echo \sprintf('Error code: %d , Error type: %s', $e->getCode(), $e->getMessage());

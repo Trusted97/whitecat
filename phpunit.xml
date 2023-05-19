@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php" cacheResult="false" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php" cacheResult="false" cacheDirectory=".phpunit.cache">
   <coverage>
-    <include>
-      <directory suffix=".php">src</directory>
-    </include>
     <report>
       <html outputDirectory="coverage/"/>
     </report>
@@ -20,4 +17,9 @@
     </testsuite>
   </testsuites>
   <logging/>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
 </phpunit>

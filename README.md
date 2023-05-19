@@ -20,7 +20,8 @@ setup in developing of PHP: Packages, Library, Composer Plugin or everything you
     - [GitHub Workflow](#github-workflows) 
     - [GitHub Issue](#github-issue)  
     - [GitHub Pull](#github-pull)
-    - [PHP CS Fixer](#php-cs-fixer-basic-config)
+    - [PHP CS Fixer](#php-cs-fixer)
+    - [PHPUnit](#phpunit)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -83,12 +84,20 @@ This command setup basic pull request template for your library
 vendor/bin/whitecat github:pull
 ```
 
-#### PHP CS Fixer basic config
+#### PHP CS Fixer
 
-This command setup a basic PHP CS Fixer file and check if in composer is installed
+This command setup a basic PHP CS Fixer config file and check if in composer is installed
 
 ``` sh
 vendor/bin/whitecat php-cs-fixer:init
+```
+
+#### PHPUnit 
+
+This command setup a basic PHPUnit config file and check if in composer is installed
+
+``` sh
+vendor/bin/whitecat phpunit:init
 ```
 
 ## Compatibility

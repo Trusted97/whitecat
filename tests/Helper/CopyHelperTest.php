@@ -24,8 +24,8 @@ class CopyHelperTest extends TestCase
 
     public function testConstruct(): void
     {
-        $copyWorkflowHelper = new CopyHelper($this->symfonyStyle, $this->filesystem);
-        $this->assertNotNull($copyWorkflowHelper);
-        $this->assertInstanceOf(CopyHelper::class, $copyWorkflowHelper);
+        $copyHelper = new CopyHelper($this->symfonyStyle, $this->filesystem);
+        $this->assertNotNull($copyHelper);
+        $this->assertInstanceOf(CopyHelper::class, $copyHelper);
     }
 }

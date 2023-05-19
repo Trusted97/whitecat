@@ -12,8 +12,9 @@ use Whitecat\Exception\InvalidComposerException;
 use Whitecat\Helper\ComposerHelper;
 use Whitecat\Helper\CopyHelper;
 
-#[IgnoreFunctionForCodeCoverage(functionName: 'addPhpCsFixer')]
-class PhpCsFixerService
+#[IgnoreFunctionForCodeCoverage(functionName: 'addPHPUnitConfigFile')]
+#[IgnoreFunctionForCodeCoverage(functionName: 'addTestDirectory')]
+class PhpUnitService
 {
     protected readonly string $workflowDirectoryPath;
     protected CopyHelper $copyHelper;
@@ -30,7 +31,7 @@ class PhpCsFixerService
 
     public function run(): int
     {
-        $this->io->title('Setup basic php-cs-fixer');
+        $this->io->title('Setup basic PHPUnit');
 
         try {
             $composer = $this->composerHelper->getComposerContent(
@@ -47,30 +48,42 @@ class PhpCsFixerService
 
         $requireDev = $composer['require-dev'];
 
-        $isInstalledPhpCsFixer = \array_key_exists('friendsofphp/php-cs-fixer', $requireDev);
+        $isInstalledPhpCsFixer = \array_key_exists('phpunit/phpunit', $requireDev);
 
         if (!$isInstalledPhpCsFixer) {
-            $this->io->warning('It seems that php-cs-fixer is not installed');
-            $this->io->warning('Launch in terminal \'composer require --dev friendsofphp/php-cs-fixer\'');
+            $this->io->warning('It seems that phpunit/phpunit is not installed');
+            $this->io->warning('Launch in terminal \'composer require --dev phpunit/phpunit\'');
             return Command::FAILURE;
         }
 
-        $this->addPhpCsFixer();
+        $this->addTestDirectory();
+        $this->addPHPUnitConfigFile();
 
         $this->io->success('All work was correctly done!');
 
         return Command::SUCCESS;
     }
 
-    private function addPhpCsFixer(): void
+    private function addPHPUnitConfigFile(): void
     {
         $this->copyHelper->setupAndCopyFile(
-            fileName: '.php-cs-fixer.dist.php',
-            questionMessage: 'It seems that a .php-cs-fixer.dist.php already exists, do you want to override?',
-            overrideCommentMessage: 'Adding .php-cs-fixer.dist.php',
-            skippedMessage: 'Skipped creation of .php-cs-fixer.dist.php',
+            fileName: 'phpunit.xml',
+            questionMessage: 'It seems that a phpunit.xml already exists, do you want to override?',
+            overrideCommentMessage: 'Adding phpunit.xml',
+            skippedMessage: 'Skipped creation of phpunit.xml',
             sourceFileDirectory: '',
             distFileDirectory: DirectoryPath::DIST_DIRECTORY->value
+        );
+    }
+
+    private function addTestDirectory(): void
+    {
+        $this->copyHelper->setupAndCopyDirectory(
+            questionMessage: 'It seems that config for PHPUnit already exists, do you want to override?',
+            overrideCommentMessage: 'Adding PHPUnit config',
+            skippedMessage: 'Skipped creation of PHPUnit config',
+            sourceDirectory: Path::normalize(DirectoryPath::TEST->value),
+            distDirectory: Path::normalize(DirectoryPath::DIST_TEST->value)
         );
     }
 }

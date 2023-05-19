@@ -3,6 +3,7 @@
 namespace Whitecat\Service;
 
 use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -11,6 +12,11 @@ use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
 use Whitecat\Helper\CopyHelper;
 
+#[IgnoreFunctionForCodeCoverage(functionName: 'addGithubWorkflowDirectory')]
+#[IgnoreFunctionForCodeCoverage(functionName: 'addGithubTestAction')]
+#[IgnoreFunctionForCodeCoverage(functionName: 'addGoogleGKEDeployAction')]
+#[IgnoreFunctionForCodeCoverage(functionName: 'addAmazonECSDeployAction')]
+#[IgnoreFunctionForCodeCoverage(functionName: 'addTerraformDeployAction')]
 class GithubWorkflowService
 {
     protected readonly string $workflowDirectoryPath;
@@ -68,7 +74,6 @@ class GithubWorkflowService
         return Command::SUCCESS;
     }
 
-    #[CodeCoverageIgnore]
     private function addGithubWorkflowDirectory(): void
     {
         $workflowDirectoryExists = $this->fs->exists($this->workflowDirectoryPath);
@@ -105,7 +110,6 @@ class GithubWorkflowService
         }
     }
 
-    #[CodeCoverageIgnore]
     private function addGithubTestAction(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -118,7 +122,6 @@ class GithubWorkflowService
         );
     }
 
-    #[CodeCoverageIgnore]
     private function addGoogleGKEDeployAction(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -131,7 +134,6 @@ class GithubWorkflowService
         );
     }
 
-    #[CodeCoverageIgnore]
     private function addAmazonECSDeployAction(): void
     {
         $this->copyHelper->setupAndCopyFile(
@@ -144,7 +146,6 @@ class GithubWorkflowService
         );
     }
 
-    #[CodeCoverageIgnore]
     private function addTerraformDeployAction(): void
     {
         $this->copyHelper->setupAndCopyFile(
