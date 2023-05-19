@@ -20,7 +20,7 @@ setup in developing of PHP: Packages, Library, Composer Plugin or everything you
     - [GitHub Workflow](#github-workflows) 
     - [GitHub Issue](#github-issue)  
     - [GitHub Pull](#github-pull)
-    - [PHP CS Fixer](#php-cs-fixer)
+    - [PHP CS Fixer](#php-cs-fixer-basic-config)
 - [Contributing](#contributing)
 - [License](#license)
 
