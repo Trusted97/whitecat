@@ -40,9 +40,11 @@ class PhpUnitService
         } catch (\JsonException $jsonException) {
             $errorMessage = \sprintf('Error: %s ', $jsonException->getMessage());
             $this->io->error($errorMessage);
+
             return Command::FAILURE;
         } catch (InvalidComposerException) {
             $this->io->error('Invalid composer.json file!');
+
             return Command::FAILURE;
         }
 
@@ -53,6 +55,7 @@ class PhpUnitService
         if (!$isInstalledPhpCsFixer) {
             $this->io->warning('It seems that phpunit/phpunit is not installed');
             $this->io->warning('Launch in terminal \'composer require --dev phpunit/phpunit\'');
+
             return Command::FAILURE;
         }
 

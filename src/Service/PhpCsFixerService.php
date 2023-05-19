@@ -39,9 +39,11 @@ class PhpCsFixerService
         } catch (\JsonException $jsonException) {
             $errorMessage = \sprintf('Error: %s ', $jsonException->getMessage());
             $this->io->error($errorMessage);
+
             return Command::FAILURE;
         } catch (InvalidComposerException) {
             $this->io->error('Invalid composer.json file!');
+
             return Command::FAILURE;
         }
 
@@ -52,6 +54,7 @@ class PhpCsFixerService
         if (!$isInstalledPhpCsFixer) {
             $this->io->warning('It seems that php-cs-fixer is not installed');
             $this->io->warning('Launch in terminal \'composer require --dev friendsofphp/php-cs-fixer\'');
+
             return Command::FAILURE;
         }
 
