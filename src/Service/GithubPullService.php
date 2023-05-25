@@ -2,26 +2,26 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
-use Whitecat\Helper\CopyHelper;
+use Whitecat\Helper\FileCopyHelper;
 
 class GithubPullService
 {
     protected readonly string $githubPullDirectoryPath;
-    protected CopyHelper $copyHelper;
+    protected FileCopyHelper $fileCopyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
         $this->githubPullDirectoryPath = Path::normalize(DirectoryPath::PULL->value);
-        $this->copyHelper              = new CopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper          = new FileCopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
@@ -38,8 +38,8 @@ class GithubPullService
         return Command::SUCCESS;
     }
 
-    #[CodeCoverageIgnore]
-    private function addGithubPullDirectory(): void
+    #[CoversNothing]
+    protected function addGithubPullDirectory(): void
     {
         $githubIssueDirectoryExists   = $this->fs->exists($this->githubPullDirectoryPath);
         $override                     = true;
@@ -75,10 +75,10 @@ class GithubPullService
         }
     }
 
-    #[CodeCoverageIgnore]
-    private function addFixPullRequestTemplate(): void
+    #[CoversNothing]
+    protected function addFixPullRequestTemplate(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'FIX.md',
             questionMessage: 'It seems that a fix pull request template already exists, do you want to override?',
             overrideCommentMessage: 'Adding FIX.md',
@@ -88,10 +88,10 @@ class GithubPullService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addImprovementPullRequestTemplate(): void
+    #[CoversNothing]
+    protected function addImprovementPullRequestTemplate(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'IMPROVEMENT.md',
             questionMessage: 'It seems that a improvement pull request template already exists, do you want to override?',
             overrideCommentMessage: 'Adding IMPROVEMENT.md',
@@ -101,10 +101,10 @@ class GithubPullService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addNewFeaturePullRequestTemplate(): void
+    #[CoversNothing]
+    protected function addNewFeaturePullRequestTemplate(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'NEW_FEATURE.md',
             questionMessage: 'It seems that a new feature pull request template already exists, do you want to override?',
             overrideCommentMessage: 'Adding NEW_FEATURE.md',

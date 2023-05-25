@@ -2,26 +2,26 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
-use Whitecat\Helper\CopyHelper;
+use Whitecat\Helper\FileCopyHelper;
 
 class GithubIssueService
 {
     protected readonly string $githubIssueDirectoryPath;
-    protected CopyHelper $copyHelper;
+    protected FileCopyHelper $fileCopyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
-        $this->githubIssueDirectoryPath   = Path::normalize(DirectoryPath::ISSUE->value);
-        $this->copyHelper                 = new CopyHelper($this->io, $this->fs);
+        $this->githubIssueDirectoryPath = Path::normalize(DirectoryPath::ISSUE->value);
+        $this->fileCopyHelper           = new FileCopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
@@ -38,8 +38,8 @@ class GithubIssueService
         return Command::SUCCESS;
     }
 
-    #[CodeCoverageIgnore]
-    private function addGithubIssueDirectory(): void
+    #[CoversNothing]
+    protected function addGithubIssueDirectory(): void
     {
         $githubIssueDirectoryExists   = $this->fs->exists($this->githubIssueDirectoryPath);
         $override                     = true;
@@ -75,10 +75,10 @@ class GithubIssueService
         }
     }
 
-    #[CodeCoverageIgnore]
-    private function addBugReportIssue(): void
+    #[CoversNothing]
+    protected function addBugReportIssue(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'BUG-REPORT.yml',
             questionMessage: 'It seems that a bug report issue already exists, do you want to override?',
             overrideCommentMessage: 'Adding BUG-REPORT.yml',
@@ -88,10 +88,10 @@ class GithubIssueService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addFeatureRequestIssue(): void
+    #[CoversNothing]
+    protected function addFeatureRequestIssue(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'FEATURE-REQUEST.yml',
             questionMessage: 'It seems that a feature request issue already exists, do you want to override?',
             overrideCommentMessage: 'Adding FEATURE-REQUEST.yml',
@@ -101,10 +101,10 @@ class GithubIssueService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addIssueConfigFile(): void
+    #[CoversNothing]
+    protected function addIssueConfigFile(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'config.yml',
             questionMessage: 'It seems that a config file for issue already exists, do you want to override?',
             overrideCommentMessage: 'Adding config.yml',

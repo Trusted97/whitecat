@@ -2,12 +2,11 @@
 
 namespace Whitecat\Helper;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 
-class CopyHelper
+class FileCopyHelper
 {
     public function __construct(
         protected readonly SymfonyStyle $io,
@@ -15,8 +14,7 @@ class CopyHelper
     ) {
     }
 
-    #[CodeCoverageIgnore]
-    public function setupAndCopyFile(
+    public function copyFile(
         string $fileName,
         string $questionMessage,
         string $overrideCommentMessage,
@@ -40,35 +38,6 @@ class CopyHelper
                 originFile: Path::normalize(__DIR__ . '/../../' . $distFileDirectory . $fileName),
                 targetFile: $sourceFileDirectory . $fileName,
                 overwriteNewerFiles: true
-            );
-        } else {
-            $this->io->comment($skippedMessage);
-        }
-    }
-
-    #[CodeCoverageIgnore]
-    public function setupAndCopyDirectory(
-        string $questionMessage,
-        string $overrideCommentMessage,
-        string $skippedMessage,
-        string $sourceDirectory,
-        string $distDirectory
-    ): void {
-        $checkExists = $this->fs->exists($sourceDirectory);
-        $override    = true;
-
-        if ($checkExists) {
-            $override = $this->io->confirm(
-                question: $questionMessage,
-                default: false
-            );
-        }
-
-        if ($override) {
-            $this->io->comment($overrideCommentMessage);
-            $this->fs->mirror(
-                originDir: Path::normalize(__DIR__ . '/../../' . $distDirectory),
-                targetDir: $sourceDirectory
             );
         } else {
             $this->io->comment($skippedMessage);

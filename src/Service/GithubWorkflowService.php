@@ -2,26 +2,26 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
-use Whitecat\Helper\CopyHelper;
+use Whitecat\Helper\FileCopyHelper;
 
 class GithubWorkflowService
 {
     protected readonly string $workflowDirectoryPath;
-    protected CopyHelper $copyHelper;
+    protected FileCopyHelper $fileCopyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
         $this->workflowDirectoryPath = Path::normalize(DirectoryPath::WORKFLOW->value);
-        $this->copyHelper            = new CopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper        = new FileCopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
@@ -68,8 +68,8 @@ class GithubWorkflowService
         return Command::SUCCESS;
     }
 
-    #[CodeCoverageIgnore]
-    private function addGithubWorkflowDirectory(): void
+    #[CoversNothing]
+    protected function addGithubWorkflowDirectory(): void
     {
         $workflowDirectoryExists = $this->fs->exists($this->workflowDirectoryPath);
         $override                = true;
@@ -105,10 +105,10 @@ class GithubWorkflowService
         }
     }
 
-    #[CodeCoverageIgnore]
-    private function addGithubTestAction(): void
+    #[CoversNothing]
+    protected function addGithubTestAction(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'test.yaml',
             questionMessage: 'It seems that github action for test already exists, do you want to override?',
             overrideCommentMessage: 'Adding github action for phpunit and code coverage',
@@ -118,10 +118,10 @@ class GithubWorkflowService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addGoogleGKEDeployAction(): void
+    #[CoversNothing]
+    protected function addGoogleGKEDeployAction(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'deploy_google_gke.yaml',
             questionMessage: 'It seems that github action for deploy on Google Kubernetes Engine already exists, do you want to override?',
             overrideCommentMessage: 'Adding Google GKE Deploy action',
@@ -131,10 +131,10 @@ class GithubWorkflowService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addAmazonECSDeployAction(): void
+    #[CoversNothing]
+    protected function addAmazonECSDeployAction(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'deploy_aws_ecs.yaml',
             questionMessage: 'It seems that github action for deploy on Amazon ECS already exists, do you want to override?',
             overrideCommentMessage: 'Adding Amazon ECS Deploy action',
@@ -144,10 +144,10 @@ class GithubWorkflowService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addTerraformDeployAction(): void
+    #[CoversNothing]
+    protected function addTerraformDeployAction(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'terraform.yaml',
             questionMessage: 'It seems that github action for deploy on terraform already exists, do you want to override?',
             overrideCommentMessage: 'Adding Terraform Deploy action',
