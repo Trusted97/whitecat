@@ -3,6 +3,7 @@
 namespace Whitecat\Test\Service;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -31,9 +32,43 @@ class GithubWorkflowServiceTest extends TestCase
 
     public function testRun(): void
     {
-        $githubWorkflowService = new GithubWorkflowService($this->symfonyStyle, $this->filesystem);
-        $statusCode            = $githubWorkflowService->run();
-        $this->assertNotNull($statusCode);
-        $this->assertSame(0, $statusCode);
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIo->expects($this->once())
+            ->method('title')
+            ->with('Github workflow');
+
+        $mockIo->expects($this->once())
+            ->method('choice')
+            ->with(
+                $this->equalTo('Select the workflow to create'),
+                $this->equalTo([
+                    'PHPUnit & Coverage (CodeCov)',
+                    'Deploy to Amazon ECS',
+                    'Deploy to Google Kubernetes Engine',
+                    'Terraform Deploy',
+                    'All',
+                ])
+            )
+            ->willReturn('PHPUnit & Coverage (CodeCov)');
+
+        $mockIo->expects($this->once())
+            ->method('warning')
+            ->with('Remember to add your Codecov Token in Github Secrets');
+
+        $mockIo->expects($this->once())
+            ->method('success')
+            ->with('All work was correctly done!');
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $service = new GithubWorkflowService($mockIo, $mockFs);
+        $result  = $service->run();
+
+        $this->assertSame(Command::SUCCESS, $result);
     }
 }
