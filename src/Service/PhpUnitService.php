@@ -2,7 +2,7 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
@@ -10,12 +10,14 @@ use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
 use Whitecat\Exception\InvalidComposerException;
 use Whitecat\Helper\ComposerHelper;
-use Whitecat\Helper\CopyHelper;
+use Whitecat\Helper\DirectoryCopyHelper;
+use Whitecat\Helper\FileCopyHelper;
 
 class PhpUnitService
 {
     protected readonly string $workflowDirectoryPath;
-    protected CopyHelper $copyHelper;
+    protected FileCopyHelper $fileCopyHelper;
+    protected DirectoryCopyHelper $directoryCopyHelper;
     protected ComposerHelper $composerHelper;
 
     public function __construct(
@@ -23,7 +25,8 @@ class PhpUnitService
         protected readonly Filesystem $fs
     ) {
         $this->workflowDirectoryPath = Path::normalize(DirectoryPath::WORKFLOW->value);
-        $this->copyHelper            = new CopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper        = new FileCopyHelper($this->io, $this->fs);
+        $this->directoryCopyHelper   = new DirectoryCopyHelper($this->io, $this->fs);
         $this->composerHelper        = new ComposerHelper();
     }
 
@@ -65,10 +68,10 @@ class PhpUnitService
         return Command::SUCCESS;
     }
 
-    #[CodeCoverageIgnore]
-    private function addPHPUnitConfigFile(): void
+    #[CoversNothing]
+    protected function addPHPUnitConfigFile(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'phpunit.xml',
             questionMessage: 'It seems that a phpunit.xml already exists, do you want to override?',
             overrideCommentMessage: 'Adding phpunit.xml',
@@ -78,10 +81,10 @@ class PhpUnitService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addTestDirectory(): void
+    #[CoversNothing]
+    protected function addTestDirectory(): void
     {
-        $this->copyHelper->setupAndCopyDirectory(
+        $this->directoryCopyHelper->copyDirectory(
             questionMessage: 'It seems that config for PHPUnit already exists, do you want to override?',
             overrideCommentMessage: 'Adding PHPUnit config',
             skippedMessage: 'Skipped creation of PHPUnit config',

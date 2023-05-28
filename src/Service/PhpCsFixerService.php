@@ -2,8 +2,7 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
-use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
@@ -11,13 +10,12 @@ use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
 use Whitecat\Exception\InvalidComposerException;
 use Whitecat\Helper\ComposerHelper;
-use Whitecat\Helper\CopyHelper;
+use Whitecat\Helper\FileCopyHelper;
 
-#[IgnoreFunctionForCodeCoverage(functionName: 'addPhpCsFixer')]
 class PhpCsFixerService
 {
     protected readonly string $workflowDirectoryPath;
-    protected CopyHelper $copyHelper;
+    protected FileCopyHelper $fileCopyHelper;
     protected ComposerHelper $composerHelper;
 
     public function __construct(
@@ -25,7 +23,7 @@ class PhpCsFixerService
         protected readonly Filesystem $fs
     ) {
         $this->workflowDirectoryPath = Path::normalize(DirectoryPath::WORKFLOW->value);
-        $this->copyHelper            = new CopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper        = new FileCopyHelper($this->io, $this->fs);
         $this->composerHelper        = new ComposerHelper();
     }
 
@@ -66,10 +64,10 @@ class PhpCsFixerService
         return Command::SUCCESS;
     }
 
-    #[CodeCoverageIgnore]
-    private function addPhpCsFixer(): void
+    #[CoversNothing]
+    protected function addPhpCsFixer(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: '.php-cs-fixer.dist.php',
             questionMessage: 'It seems that a .php-cs-fixer.dist.php already exists, do you want to override?',
             overrideCommentMessage: 'Adding .php-cs-fixer.dist.php',

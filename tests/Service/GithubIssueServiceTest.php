@@ -3,37 +3,56 @@
 namespace Whitecat\Test\Service;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Whitecat\Service\GithubIssueService;
 
 class GithubIssueServiceTest extends TestCase
 {
-    private SymfonyStyle $symfonyStyle;
-    private Filesystem $filesystem;
-
-    protected function setUp(): void
-    {
-        $input                    = $this->getMockBuilder(InputInterface::class)->getMock();
-        $output                   = $this->getMockBuilder(OutputInterface::class)->getMock();
-        $this->symfonyStyle       = new SymfonyStyle($input, $output);
-        $this->filesystem         = new Filesystem();
-    }
-
     public function testConstruct(): void
     {
-        $githubIssueService = new GithubIssueService($this->symfonyStyle, $this->filesystem);
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $githubIssueService = new GithubIssueService($mockIo, $mockFs);
         $this->assertNotNull($githubIssueService);
         $this->assertInstanceOf(GithubIssueService::class, $githubIssueService);
     }
 
     public function testRun(): void
     {
-        $githubIssueService = new GithubIssueService($this->symfonyStyle, $this->filesystem);
-        $statusCode         = $githubIssueService->run();
-        $this->assertNotNull($statusCode);
-        $this->assertSame(0, $statusCode);
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIo->expects($this->once())
+            ->method('title')
+            ->with('Github issue');
+
+        $mockFs->expects($this->once())
+            ->method('mkdir');
+
+        $mockIo->expects($this->once())
+            ->method('success')
+            ->with('All work was correctly done!');
+
+        // Create GithubIssueService instance
+        $githubIssueService = new GithubIssueService($mockIo, $mockFs);
+
+        // Run the method
+        $result = $githubIssueService->run();
+
+        // Assertions
+        $this->assertSame(Command::SUCCESS, $result);
     }
 }

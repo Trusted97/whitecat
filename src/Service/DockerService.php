@@ -2,30 +2,33 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Whitecat\Enums\DirectoryPath;
-use Whitecat\Helper\CopyHelper;
+use Whitecat\Helper\DirectoryCopyHelper;
+use Whitecat\Helper\FileCopyHelper;
 
 class DockerService
 {
     protected readonly string $dockerComposePath;
     protected readonly string $dockerDirectoryPath;
     protected readonly string $dockerDistDirectoryPath;
-    protected CopyHelper $copyHelper;
+    protected FileCopyHelper $fileCopyHelper;
+    protected DirectoryCopyHelper $directoryCopyHelper;
 
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs
     ) {
-        $this->dockerComposePath       = Path::normalize(DirectoryPath::DOCKER_COMPOSE->value);
-        $this->dockerDirectoryPath     = Path::normalize(DirectoryPath::DOCKER->value);
-        $this->dockerDistDirectoryPath = Path::normalize(DirectoryPath::DIST_DOCKER->value);
-        $this->copyHelper              = new CopyHelper($this->io, $this->fs);
+        $this->dockerComposePath           = Path::normalize(DirectoryPath::DOCKER_COMPOSE->value);
+        $this->dockerDirectoryPath         = Path::normalize(DirectoryPath::DOCKER->value);
+        $this->dockerDistDirectoryPath     = Path::normalize(DirectoryPath::DIST_DOCKER->value);
+        $this->fileCopyHelper              = new FileCopyHelper($this->io, $this->fs);
+        $this->directoryCopyHelper         = new DirectoryCopyHelper($this->io, $this->fs);
     }
 
     public function run(): int
@@ -40,8 +43,8 @@ class DockerService
         return Command::SUCCESS;
     }
 
-    #[CodeCoverageIgnore]
-    private function addDockerDirectory(): void
+    #[CoversNothing]
+    protected function addDockerDirectory(): void
     {
         $dockerDirectoryExists   = $this->fs->exists($this->dockerDirectoryPath);
         $override                = true;
@@ -76,7 +79,7 @@ class DockerService
             $this->io->comment('Skipped creation of docker directory');
         }
 
-        $this->copyHelper->setupAndCopyDirectory(
+        $this->directoryCopyHelper->copyDirectory(
             questionMessage: 'It seems that config for PHP 8.1 already exists, do you want to override?',
             overrideCommentMessage: 'Adding PHP 8.1 config',
             skippedMessage: 'Skipped creation of PHP 8.1 config',
@@ -85,10 +88,10 @@ class DockerService
         );
     }
 
-    #[CodeCoverageIgnore]
-    private function addDockerCompose(): void
+    #[CoversNothing]
+    protected function addDockerCompose(): void
     {
-        $this->copyHelper->setupAndCopyFile(
+        $this->fileCopyHelper->copyFile(
             fileName: 'docker-compose.yml',
             questionMessage: 'It seems that a docker-compose.yml already exists, do you want to override?',
             overrideCommentMessage: 'Adding docker-compose.yml',
