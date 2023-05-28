@@ -3,37 +3,110 @@
 namespace Whitecat\Test\Service;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
+use Whitecat\Helper\ComposerHelper;
+use Whitecat\Helper\DirectoryCopyHelper;
+use Whitecat\Helper\FileCopyHelper;
 use Whitecat\Service\PhpUnitService;
 
 class PhpUnitServiceTest extends TestCase
 {
-    private SymfonyStyle $symfonyStyle;
-    private Filesystem $filesystem;
-
-    protected function setUp(): void
-    {
-        $input                    = $this->getMockBuilder(InputInterface::class)->getMock();
-        $output                   = $this->getMockBuilder(OutputInterface::class)->getMock();
-        $this->symfonyStyle       = new SymfonyStyle($input, $output);
-        $this->filesystem         = new Filesystem();
-    }
-
     public function testConstruct(): void
     {
-        $phpUnitService = new PhpUnitService($this->symfonyStyle, $this->filesystem);
-        $this->assertNotNull($phpUnitService);
-        $this->assertInstanceOf(PhpUnitService::class, $phpUnitService);
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $phpCsFixerService = new PhpUnitService($mockIo, $mockFs);
+        $this->assertNotNull($phpCsFixerService);
+        $this->assertInstanceOf(PhpUnitService::class, $phpCsFixerService);
     }
 
     public function testRun(): void
     {
-        $phpUnitService        = new PhpUnitService($this->symfonyStyle, $this->filesystem);
-        $statusCode            = $phpUnitService->run();
-        $this->assertNotNull($statusCode);
-        $this->assertSame(0, $statusCode);
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIo->expects($this->once())
+            ->method('title')
+            ->with('Setup basic PHPUnit');
+
+        // Mock ComposerHelper
+        $mockComposerHelper = $this->getMockBuilder(ComposerHelper::class)
+            ->getMock();
+
+        $mockComposerHelper->expects($this->once())
+            ->method('getComposerContent')
+            ->with('./composer.json')
+            ->willReturn(['require-dev' => [
+                'phpunit/phpunit' => '^10',
+            ]]);
+
+        $mockIo->expects($this->never())
+            ->method('error');
+
+        $mockIo->expects($this->never())
+            ->method('warning');
+
+        // Mock FileCopyHelper
+        $mockFileCopyHelper = $this->getMockBuilder(FileCopyHelper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFileCopyHelper->expects($this->once())
+            ->method('copyFile')
+            ->with(
+                'phpunit.xml',
+                'It seems that a phpunit.xml already exists, do you want to override?',
+                'Adding phpunit.xml',
+                'Skipped creation of phpunit.xml',
+                '',
+                'dist/'
+            );
+
+        // Mock DirectoryCopyHelper
+        $mockDirectoryCopyHelper = $this->getMockBuilder(DirectoryCopyHelper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockDirectoryCopyHelper->expects($this->once())
+            ->method('copyDirectory')
+            ->with(
+                'It seems that config for PHPUnit already exists, do you want to override?',
+                'Adding PHPUnit config',
+                'Skipped creation of PHPUnit config',
+                'tests',
+                'dist/tests/'
+            );
+
+        // Create PhpUnitService instance and inject dependencies
+        $phpUnitService           = new PhpUnitService($mockIo, $mockFs);
+        $phpUnitServiceReflection = new \ReflectionClass(PhpUnitService::class);
+        $composerHelperProperty   = $phpUnitServiceReflection->getProperty('composerHelper');
+        $composerHelperProperty->setAccessible(true);
+        $composerHelperProperty->setValue($phpUnitService, $mockComposerHelper);
+        $fileCopyHelperProperty = $phpUnitServiceReflection->getProperty('fileCopyHelper');
+        $fileCopyHelperProperty->setAccessible(true);
+        $fileCopyHelperProperty->setValue($phpUnitService, $mockFileCopyHelper);
+        $directoryCopyHelperProperty = $phpUnitServiceReflection->getProperty('directoryCopyHelper');
+        $directoryCopyHelperProperty->setAccessible(true);
+        $directoryCopyHelperProperty->setValue($phpUnitService, $mockDirectoryCopyHelper);
+
+        // Run the method
+        $result = $phpUnitService->run();
+
+        // Assertions
+        $this->assertSame(Command::SUCCESS, $result);
     }
 }
