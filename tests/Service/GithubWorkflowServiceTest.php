@@ -30,9 +30,13 @@ class GithubWorkflowServiceTest extends TestCase
         $this->assertInstanceOf(GithubWorkflowService::class, $githubWorkflowService);
     }
 
-    public function testRun(): void
+    public function testRunPHPUnitWorkflow(): void
     {
         $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -57,6 +61,116 @@ class GithubWorkflowServiceTest extends TestCase
         $mockIo->expects($this->once())
             ->method('warning')
             ->with('Remember to add your Codecov Token in Github Secrets');
+
+        $mockIo->expects($this->once())
+            ->method('success')
+            ->with('All work was correctly done!');
+
+        $service = new GithubWorkflowService($mockIo, $mockFs);
+        $result  = $service->run();
+
+        $this->assertSame(Command::SUCCESS, $result);
+    }
+
+    public function testRunAmazonECSWorkflow(): void
+    {
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIo->expects($this->once())
+            ->method('title')
+            ->with('Github workflow');
+
+        $mockIo->expects($this->once())
+            ->method('choice')
+            ->with(
+                $this->equalTo('Select the workflow to create'),
+                $this->equalTo([
+                    'PHPUnit & Coverage (CodeCov)',
+                    'Deploy to Amazon ECS',
+                    'Deploy to Google Kubernetes Engine',
+                    'Terraform Deploy',
+                    'All',
+                ])
+            )
+            ->willReturn('Deploy to Amazon ECS');
+
+        $mockIo->expects($this->once())
+            ->method('success')
+            ->with('All work was correctly done!');
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $service = new GithubWorkflowService($mockIo, $mockFs);
+        $result  = $service->run();
+
+        $this->assertSame(Command::SUCCESS, $result);
+    }
+
+    public function testRunGoogleKubernetesWorklow(): void
+    {
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIo->expects($this->once())
+            ->method('title')
+            ->with('Github workflow');
+
+        $mockIo->expects($this->once())
+            ->method('choice')
+            ->with(
+                $this->equalTo('Select the workflow to create'),
+                $this->equalTo([
+                    'PHPUnit & Coverage (CodeCov)',
+                    'Deploy to Amazon ECS',
+                    'Deploy to Google Kubernetes Engine',
+                    'Terraform Deploy',
+                    'All',
+                ])
+            )
+            ->willReturn('Deploy to Google Kubernetes Engine');
+
+        $mockIo->expects($this->once())
+            ->method('success')
+            ->with('All work was correctly done!');
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $service = new GithubWorkflowService($mockIo, $mockFs);
+        $result  = $service->run();
+
+        $this->assertSame(Command::SUCCESS, $result);
+    }
+
+    public function testRunTerraformWorklow(): void
+    {
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIo->expects($this->once())
+            ->method('title')
+            ->with('Github workflow');
+
+        $mockIo->expects($this->once())
+            ->method('choice')
+            ->with(
+                $this->equalTo('Select the workflow to create'),
+                $this->equalTo([
+                    'PHPUnit & Coverage (CodeCov)',
+                    'Deploy to Amazon ECS',
+                    'Deploy to Google Kubernetes Engine',
+                    'Terraform Deploy',
+                    'All',
+                ])
+            )
+            ->willReturn('Terraform Deploy');
 
         $mockIo->expects($this->once())
             ->method('success')
