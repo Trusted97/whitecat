@@ -28,7 +28,7 @@ class PhpUnitServiceTest extends TestCase
         $this->assertInstanceOf(PhpUnitService::class, $phpCsFixerService);
     }
 
-    public function testRun(): void
+    public function testSuccessRun(): void
     {
         $mockIo = $this->getMockBuilder(SymfonyStyle::class)
             ->disableOriginalConstructor()
@@ -94,13 +94,10 @@ class PhpUnitServiceTest extends TestCase
         $phpUnitService           = new PhpUnitService($mockIo, $mockFs);
         $phpUnitServiceReflection = new \ReflectionClass(PhpUnitService::class);
         $composerHelperProperty   = $phpUnitServiceReflection->getProperty('composerHelper');
-        $composerHelperProperty->setAccessible(true);
         $composerHelperProperty->setValue($phpUnitService, $mockComposerHelper);
         $fileCopyHelperProperty = $phpUnitServiceReflection->getProperty('fileCopyHelper');
-        $fileCopyHelperProperty->setAccessible(true);
         $fileCopyHelperProperty->setValue($phpUnitService, $mockFileCopyHelper);
         $directoryCopyHelperProperty = $phpUnitServiceReflection->getProperty('directoryCopyHelper');
-        $directoryCopyHelperProperty->setAccessible(true);
         $directoryCopyHelperProperty->setValue($phpUnitService, $mockDirectoryCopyHelper);
 
         // Run the method
@@ -108,5 +105,58 @@ class PhpUnitServiceTest extends TestCase
 
         // Assertions
         $this->assertSame(Command::SUCCESS, $result);
+    }
+
+    public function testFailedRun(): void
+    {
+        $mockIo = $this->getMockBuilder(SymfonyStyle::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFs = $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIo->expects($this->once())
+            ->method('title')
+            ->with('Setup basic PHPUnit');
+
+        // Mock ComposerHelper
+        $mockComposerHelper = $this->getMockBuilder(ComposerHelper::class)
+            ->getMock();
+
+        $mockComposerHelper->expects($this->once())
+            ->method('getComposerContent')
+            ->willReturn(['require-dev' => []]);
+
+        // Mock FileCopyHelper
+        $mockFileCopyHelper = $this->getMockBuilder(FileCopyHelper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockFileCopyHelper->expects($this->never())->method('copyFile');
+
+        // Mock DirectoryCopyHelper
+        $mockDirectoryCopyHelper = $this->getMockBuilder(DirectoryCopyHelper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockDirectoryCopyHelper->expects($this->never())->method('copyDirectory');
+
+        // Create PhpUnitService instance and inject dependencies
+        $phpUnitService           = new PhpUnitService($mockIo, $mockFs);
+        $phpUnitServiceReflection = new \ReflectionClass(PhpUnitService::class);
+        $composerHelperProperty   = $phpUnitServiceReflection->getProperty('composerHelper');
+        $composerHelperProperty->setValue($phpUnitService, $mockComposerHelper);
+        $fileCopyHelperProperty = $phpUnitServiceReflection->getProperty('fileCopyHelper');
+        $fileCopyHelperProperty->setValue($phpUnitService, $mockFileCopyHelper);
+        $directoryCopyHelperProperty = $phpUnitServiceReflection->getProperty('directoryCopyHelper');
+        $directoryCopyHelperProperty->setValue($phpUnitService, $mockDirectoryCopyHelper);
+
+        // Run the method
+        $result = $phpUnitService->run();
+
+        // Assertions
+        $this->assertSame(Command::FAILURE, $result);
     }
 }

@@ -51,9 +51,9 @@ class PhpUnitService
 
         $requireDev = $composer['require-dev'];
 
-        $isInstalledPhpCsFixer = \array_key_exists('phpunit/phpunit', $requireDev);
+        $isInstalledPhpUnit = \array_key_exists('phpunit/phpunit', $requireDev);
 
-        if (!$isInstalledPhpCsFixer) {
+        if (!$isInstalledPhpUnit) {
             $this->io->warning('It seems that phpunit/phpunit is not installed');
             $this->io->warning('Launch in terminal \'composer require --dev phpunit/phpunit\'');
 
