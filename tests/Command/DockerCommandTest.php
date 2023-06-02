@@ -6,14 +6,14 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
-use Whitecat\Command\DockerCommand;
+use Whitecat\Command\DockerSetupCommand;
 
 class DockerCommandTest extends TestCase
 {
     public function testExecute(): void
     {
         $application = new Application();
-        $application->add(new DockerCommand());
+        $application->add(new DockerSetupCommand());
         $installerCommand = $application->find('docker:setup');
 
         $this->assertInstanceOf(Command::class, $installerCommand);

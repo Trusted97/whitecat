@@ -59,7 +59,7 @@ if (!\defined('WHITECAT_COMPOSER_INSTALL')) {
 require WHITECAT_COMPOSER_INSTALL;
 
 use Symfony\Component\Console\Application;
-use Whitecat\Command\DockerCommand;
+use Whitecat\Command\DockerSetupCommand;
 use Whitecat\Command\GithubIssueCommand;
 use Whitecat\Command\GithubPullCommand;
 use Whitecat\Command\GithubWorkflowCommand;
@@ -69,7 +69,7 @@ use Whitecat\Command\PhpUnitCommand;
 $application = new Application();
 
 try {
-    $application->add(new DockerCommand());
+    $application->add(new DockerSetupCommand());
     $application->add(new GithubIssueCommand());
     $application->add(new GithubPullCommand());
     $application->add(new GithubWorkflowCommand());

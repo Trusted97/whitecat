@@ -12,7 +12,7 @@ use Whitecat\Enums\DirectoryPath;
 use Whitecat\Helper\DirectoryCopyHelper;
 use Whitecat\Helper\FileCopyHelper;
 
-class DockerService
+class DockerSetupService
 {
     protected readonly string $dockerComposePath;
     protected readonly string $dockerDirectoryPath;
