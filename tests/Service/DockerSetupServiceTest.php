@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
-use Whitecat\Service\DockerService;
+use Whitecat\Service\DockerSetupService;
 
-class DockerServiceTest extends TestCase
+class DockerSetupServiceTest extends TestCase
 {
     public function testConstruct(): void
     {
@@ -20,9 +20,9 @@ class DockerServiceTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $dockerService = new DockerService($mockIo, $mockFs);
+        $dockerService = new DockerSetupService($mockIo, $mockFs);
         $this->assertNotNull($dockerService);
-        $this->assertInstanceOf(DockerService::class, $dockerService);
+        $this->assertInstanceOf(DockerSetupService::class, $dockerService);
     }
 
     public function testRun(): void
@@ -46,7 +46,7 @@ class DockerServiceTest extends TestCase
             ->method('mkdir');
 
         // Create DockerService instance
-        $dockerService = new DockerService($mockIo, $mockFs);
+        $dockerService = new DockerSetupService($mockIo, $mockFs);
 
         // Run the method
         $result = $dockerService->run();
