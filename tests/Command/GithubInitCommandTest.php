@@ -24,7 +24,7 @@ class GithubInitCommandTest extends TestCase
         $commandTester->assertCommandIsSuccessful();
 
         $this->assertStringContainsString(
-            'Github issue',
+            'Github init',
             $commandTester->getDisplay()
         );
 

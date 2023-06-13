@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
-use Whitecat\Service\GithubIssueService;
+use Whitecat\Service\GithubInitService;
 
 #[AsCommand(
     name: 'github:init',
@@ -22,6 +22,6 @@ class GithubInitCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $fs = new Filesystem();
 
-        return (new GithubIssueService($io, $fs))->run();
+        return (new GithubInitService($io, $fs))->run();
     }
 }

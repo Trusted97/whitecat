@@ -43,10 +43,10 @@ class GithubInitService
     #[CoversNothing]
     protected function addGithubDirectory(): void
     {
-        $githubIssueDirectoryExists   = $this->fs->exists($this->githubDirectoryPath);
-        $override                     = true;
+        $githubDirectoryExists = $this->fs->exists($this->githubDirectoryPath);
+        $override              = true;
 
-        if ($githubIssueDirectoryExists) {
+        if ($githubDirectoryExists) {
             $override = $this->io->confirm(
                 question: 'It seems that github directory already exists, do you want to continue?',
                 default: false
@@ -60,8 +60,8 @@ class GithubInitService
             } catch (IOExceptionInterface $IOException) {
                 $this->io->error(
                     \sprintf(
-                        'An error occurred while creating your directory at %s',
-                        $IOException->getPath()
+                        'Error: %s',
+                        $IOException->getMessage()
                     )
                 );
             } catch (\Exception $commandException) {
