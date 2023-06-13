@@ -1,0 +1,16 @@
+# Ignore vendor directory
+/vendor/
+
+# Ignore development files
+/.phpunit.result.cache
+/phpunit.xml
+/phpunit.xml.dist
+/composer.lock
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore system files
+.DS_Store
+Thumbs.db

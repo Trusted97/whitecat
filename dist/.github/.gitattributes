@@ -1,0 +1,13 @@
+# Ignore common files
+/.*                     export-ignore
+
+# Exclude specific directory
+/tests/           export-ignore
+/vendor/          export-ignore
+/.github/         export-ignore
+
+# Exclude development and configuration files
+/phpunit.xml      export-ignore
+/phpunit.xml.dist export-ignore
+/composer.lock    export-ignore
+/composer.phar    export-ignore

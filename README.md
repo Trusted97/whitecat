@@ -17,6 +17,7 @@ setup in developing of PHP: Packages, Library, Composer Plugin or everything you
 - [Install](#install)
   - [Usage](#usage) 
     - [Docker setup](#docker-setup)
+    - [Github init](#github-init)
     - [GitHub Workflow](#github-workflows) 
     - [GitHub Issue](#github-issue)  
     - [GitHub Pull](#github-pull)
@@ -58,6 +59,14 @@ This command setup basic docker environment for your library
 
 ``` sh
 vendor/bin/whitecat docker:setup
+```
+
+#### Github Init
+
+This command setup basic .github directory and related files for your library
+
+``` sh
+vendor/bin/whitecat github:init
 ```
 
 #### GitHub Workflows
