@@ -24,7 +24,7 @@ Make sure the versions installed support [Compose file format 3.9](https://docs.
 You can then build the images:
 
 ```console
-docker compose up --build -d
+docker-compose up --build -d
 ```
 
 Now you can run commands needed to work on the project. For example, say you want to install the dependencies on PHP 8.0:
