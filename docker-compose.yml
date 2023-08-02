@@ -8,3 +8,11 @@ services:
     tty: true
     volumes:
       - .:/app:cached
+
+  whitecat-82:
+    build: docker/php-8.2
+    container_name: whitecat-82
+    working_dir: /app
+    tty: true
+    volumes:
+      - .:/app:cached
