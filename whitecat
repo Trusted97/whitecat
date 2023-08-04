@@ -64,6 +64,7 @@ use Whitecat\Command\GithubIssueCommand;
 use Whitecat\Command\GithubPullCommand;
 use Whitecat\Command\GithubWorkflowCommand;
 use Whitecat\Command\PhpCsFixerCommand;
+use Whitecat\Command\PhpStanCommand;
 use Whitecat\Command\PhpUnitCommand;
 
 $application = new Application();
@@ -74,6 +75,7 @@ try {
     $application->add(new GithubPullCommand());
     $application->add(new GithubWorkflowCommand());
     $application->add(new PhpCsFixerCommand());
+    $application->add(new PhpStanCommand());
     $application->add(new PhpUnitCommand());
     $application->run();
 } catch (Exception $e) {

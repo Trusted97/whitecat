@@ -6,8 +6,8 @@ enum DirectoryPath: string
 {
     case DIST_DIRECTORY  = 'dist/';
     case DIST_DOCKER     = 'dist/docker/';
-    case DIST_ISSUE      = 'dist/ISSUE_TEMPLATE/';
     case DIST_GITHUB     = 'dist/.github/';
+    case DIST_ISSUE      = 'dist/ISSUE_TEMPLATE/';
     case DIST_PULL       = 'dist/PULL_REQUEST_TEMPLATE/';
     case DIST_TEST       = 'dist/tests/';
     case DIST_WORKFLOW   = 'dist/workflows/';
