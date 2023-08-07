@@ -22,6 +22,7 @@ setup in developing of PHP: Packages, Library, Composer Plugin or everything you
     - [GitHub Issue](#github-issue)  
     - [GitHub Pull](#github-pull)
     - [PHP CS Fixer](#php-cs-fixer)
+    - [PHPStan](#phpstan)
     - [PHPUnit](#phpunit)
 - [Contributing](#contributing)
 - [License](#license)
@@ -99,6 +100,14 @@ This command setup a basic PHP CS Fixer config file and check if in composer is 
 
 ``` sh
 vendor/bin/whitecat php-cs-fixer:init
+```
+
+#### PHPStan
+
+This command setup a basic PHPStan config file with starting level of 6 and check if in composer is installed
+
+``` sh
+vendor/bin/whitecat phpstan:init
 ```
 
 #### PHPUnit 
