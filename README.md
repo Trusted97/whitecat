@@ -6,6 +6,7 @@
 ![Packagist Version](https://img.shields.io/packagist/v/trusted97/whitecat)
 [![justforfunnoreally.dev badge](https://img.shields.io/badge/justforfunnoreally-dev-9ff)](https://justforfunnoreally.dev)
 [![PHPStan Enabled](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://phpstan.org/)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f3b5e0692e2d9b90efac/maintainability)](https://codeclimate.com/github/Trusted97/whitecat/maintainability)
 
 > Developer toolbox for avoid boring setup during development
 
