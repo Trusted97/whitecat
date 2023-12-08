@@ -121,9 +121,9 @@ vendor/bin/whitecat phpunit:init
 
 ## Compatibility
 
-| Repository Branch | PHP Compatibility | Status	                    | 
-|-------------------|-------------------|----------------------------|
-| `1.x`             | `^8.1`            | New features and bug fixes |
+| Repository Branch | PHP Compatibility | Status                     | Docs                        |
+|-------------------|-------------------|----------------------------|-----------------------------|
+| `1.x`             | `^8.1`            | New features and bug fixes | [Documentation 1.x](./docs) |
 
 ## Contributing
 
