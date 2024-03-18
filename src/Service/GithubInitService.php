@@ -33,7 +33,6 @@ class GithubInitService
         $this->addEditorConfig();
         $this->addGitAttributes();
         $this->addGitIgnore();
-        $this->addReadme();
 
         $this->io->success('All work was correctly done!');
 
