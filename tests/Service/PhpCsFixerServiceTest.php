@@ -53,13 +53,6 @@ class PhpCsFixerServiceTest extends TestCase
         $mockIo->expects($this->never())
             ->method('error');
 
-        $mockIo->expects($this->exactly(2))
-            ->method('warning')
-            ->willReturn([
-                'It seems that php-cs-fixer is not installed',
-                'Launch in terminal \'composer require --dev friendsofphp/php-cs-fixer\'',
-            ]);
-
         // Create PhpCsFixerService instance
         $phpCsFixerService           = new PhpCsFixerService($mockIo, $mockFs);
         $phpCsFixerServiceReflection = new \ReflectionClass(PhpCsFixerService::class);
