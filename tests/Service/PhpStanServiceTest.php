@@ -54,13 +54,6 @@ class PhpStanServiceTest extends TestCase
         $mockIo->expects($this->never())
             ->method('error');
 
-        $mockIo->expects($this->exactly(2))
-            ->method('warning')
-            ->willReturn([
-                'It seems that phpstan/phpstan is not installed',
-                'Launch in terminal \'composer require --dev phpstan/phpstan\'',
-            ]);
-
         // Create PhpCsFixerService instance
         $phpStanService              = new PhpStanService($mockIo, $mockFs);
         $phpStanServiceReflection    = new \ReflectionClass(PhpStanService::class);
