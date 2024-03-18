@@ -84,8 +84,8 @@ class GithubInitService
             questionMessage: 'It seems that a .editorconfig already exists, do you want to override?',
             overrideCommentMessage: 'Adding .editorconfig',
             skippedMessage: 'Skipped creation of .editorconfig',
-            sourceFileDirectory: $this->githubDirectoryPath,
-            distFileDirectory: DirectoryPath::DIST_GITHUB->value
+            sourceFileDirectory: '',
+            distFileDirectory: Path::normalize(DirectoryPath::DIST_GITHUB->value)
         );
     }
 
@@ -97,8 +97,8 @@ class GithubInitService
             questionMessage: 'It seems that a .gitattributes already exists, do you want to override?',
             overrideCommentMessage: 'Adding .gitattributes',
             skippedMessage: 'Skipped creation of .gitattributes',
-            sourceFileDirectory: $this->githubDirectoryPath,
-            distFileDirectory: DirectoryPath::DIST_GITHUB->value
+            sourceFileDirectory: '',
+            distFileDirectory: Path::normalize(DirectoryPath::DIST_GITHUB->value)
         );
     }
 
@@ -110,8 +110,8 @@ class GithubInitService
             questionMessage: 'It seems that a .gitignore already exists, do you want to override?',
             overrideCommentMessage: 'Adding .gitignore',
             skippedMessage: 'Skipped creation of .gitignore',
-            sourceFileDirectory: $this->githubDirectoryPath,
-            distFileDirectory: DirectoryPath::DIST_GITHUB->value
+            sourceFileDirectory: '',
+            distFileDirectory: Path::normalize(DirectoryPath::DIST_GITHUB->value)
         );
     }
 
@@ -123,7 +123,7 @@ class GithubInitService
             questionMessage: 'It seems that a README.md already exists, do you want to override?',
             overrideCommentMessage: 'Adding README.md',
             skippedMessage: 'Skipped creation of README.md',
-            sourceFileDirectory: $this->githubDirectoryPath,
+            sourceFileDirectory: '',
             distFileDirectory: DirectoryPath::DIST_GITHUB->value
         );
     }
