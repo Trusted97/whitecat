@@ -1,5 +1,5 @@
 # Ignore common files
-/.*                     export-ignore
+# /.*                     export-ignore
 
 # Exclude specific directory
 /tests/           export-ignore
