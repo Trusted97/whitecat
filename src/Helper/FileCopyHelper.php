@@ -10,7 +10,7 @@ class FileCopyHelper
 {
     public function __construct(
         protected readonly SymfonyStyle $io,
-        protected readonly Filesystem $fs
+        protected readonly Filesystem $fs,
     ) {
     }
 
@@ -20,7 +20,7 @@ class FileCopyHelper
         string $overrideCommentMessage,
         string $skippedMessage,
         string $sourceFileDirectory,
-        string $distFileDirectory
+        string $distFileDirectory,
     ): void {
         $checkExists = $this->fs->exists($sourceFileDirectory . $fileName);
         $override    = true;

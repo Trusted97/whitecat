@@ -22,7 +22,7 @@ class DockerSetupService
 
     public function __construct(
         protected readonly SymfonyStyle $io,
-        protected readonly Filesystem $fs
+        protected readonly Filesystem $fs,
     ) {
         $this->dockerComposePath           = Path::normalize(DirectoryPath::DOCKER_COMPOSE->value);
         $this->dockerDirectoryPath         = Path::normalize(DirectoryPath::DOCKER->value);
