@@ -22,7 +22,7 @@ class PhpUnitService
 
     public function __construct(
         protected readonly SymfonyStyle $io,
-        protected readonly Filesystem $fs
+        protected readonly Filesystem $fs,
     ) {
         $this->workflowDirectoryPath = Path::normalize(DirectoryPath::WORKFLOW->value);
         $this->fileCopyHelper        = new FileCopyHelper($this->io, $this->fs);

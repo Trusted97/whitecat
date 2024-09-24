@@ -18,7 +18,7 @@ class GithubInitService
 
     public function __construct(
         protected readonly SymfonyStyle $io,
-        protected readonly Filesystem $fs
+        protected readonly Filesystem $fs,
     ) {
         $this->githubDirectoryPath = Path::normalize(DirectoryPath::GITHUB->value);
         $this->fileCopyHelper      = new FileCopyHelper($this->io, $this->fs);

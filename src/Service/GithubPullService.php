@@ -18,7 +18,7 @@ class GithubPullService
 
     public function __construct(
         protected readonly SymfonyStyle $io,
-        protected readonly Filesystem $fs
+        protected readonly Filesystem $fs,
     ) {
         $this->githubPullDirectoryPath = Path::normalize(DirectoryPath::PULL->value);
         $this->fileCopyHelper          = new FileCopyHelper($this->io, $this->fs);
