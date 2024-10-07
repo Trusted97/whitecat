@@ -1,5 +1,5 @@
 # Whitecat 🐱
-![CI](https://github.com/Trusted97/whitecat/workflows/test/badge.svg)
+[![🧪 Test](https://github.com/Trusted97/whitecat/actions/workflows/test.yaml/badge.svg?branch=master)](https://github.com/Trusted97/whitecat/actions/workflows/test.yaml)
 [![codecov](https://codecov.io/gh/Trusted97/whitecat/branch/master/graph/badge.svg?token=URCWOH9JFR)](https://codecov.io/gh/Trusted97/whitecat)
 ![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/trusted97/whitecat/php)
 ![GitHub](https://img.shields.io/github/license/Trusted97/whitecat)
