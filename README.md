@@ -31,18 +31,6 @@ setup in developing of PHP: Packages, Library, Composer Plugin or everything you
 
 ## Install
 
-In composer.json
-
-``` json
-"require-dev": {
-    "trusted97/whitecat": "^2.0"
-},
-```
-
-Or
-
-In Shell
-
 ``` sh
 composer require --dev trusted97/whitecat
 ```
@@ -123,8 +111,7 @@ vendor/bin/whitecat phpunit:init
 
 | Repository Branch | PHP Compatibility | Status                     | Docs                        |
 |-------------------|-------------------|----------------------------|-----------------------------|
-| `2.x`             | `^8.3`            | New features and bug fixes | [Documentation 1.x](./docs) |
-| `1.x`             | `^8.1`            | New features and bug fixes | [Documentation 1.x](./docs) |
+| `1.x`             | `^8.2`            | New features and bug fixes | [Documentation 1.x](./docs) |
 
 ## Contributing
 
