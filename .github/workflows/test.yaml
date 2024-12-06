@@ -52,4 +52,4 @@ jobs:
 
       - name: 📤 Upload coverage to Codecov
         uses: codecov/codecov-action@v5
-        if: matrix.php == '8.3'
+        if: matrix.php == '8.4'
