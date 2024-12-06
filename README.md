@@ -10,17 +10,17 @@
 
 > Developer toolbox for avoid boring setup during development
 
-Whitecat is a developer toolbox of cli command. Each command is thought for avoid boring 
-setup in developing of PHP: Packages, Library, Composer Plugin or everything you're building! 
+Whitecat is a developer toolbox of cli command. Each command is thought for avoid boring
+setup in developing of PHP: Packages, Library, Composer Plugin or everything you're building!
 
 ## Table of Contents
 
 - [Install](#install)
-  - [Usage](#usage) 
+  - [Usage](#usage)
     - [Docker setup](#docker-setup)
     - [Github init](#github-init)
-    - [GitHub Workflow](#github-workflows) 
-    - [GitHub Issue](#github-issue)  
+    - [GitHub Workflow](#github-workflows)
+    - [GitHub Issue](#github-issue)
     - [GitHub Pull](#github-pull)
     - [PHP CS Fixer](#php-cs-fixer)
     - [PHPStan](#phpstan)
@@ -35,7 +35,7 @@ In composer.json
 
 ``` json
 "require-dev": {
-    "trusted97/whitecat": "^1.0.0"
+    "trusted97/whitecat": "^2.0"
 },
 ```
 
@@ -111,7 +111,7 @@ This command setup a basic PHPStan config file with starting level of 6 and chec
 vendor/bin/whitecat phpstan:init
 ```
 
-#### PHPUnit 
+#### PHPUnit
 
 This command setup a basic PHPUnit config file and check if in composer is installed
 
@@ -124,7 +124,7 @@ vendor/bin/whitecat phpunit:init
 | Repository Branch | PHP Compatibility | Status                     | Docs                        |
 |-------------------|-------------------|----------------------------|-----------------------------|
 | `1.x`             | `^8.1`            | New features and bug fixes | [Documentation 1.x](./docs) |
-| `2.x`             | `^8.3`            | New features and bug fixes | [Documentation 1.x](./docs) |
+| `2.x`             | `^8.3`            | New features and bug fixes | [Documentation 2.x](./docs) |
 
 ## Contributing
 
@@ -132,5 +132,5 @@ Any questions, bug reports or suggestions for improvement are very welcome. See 
 
 ## License
 
-Whitecat is licensed under the MIT license.  
+Whitecat is licensed under the MIT license.
 See the [LICENSE](./LICENSE) file for more information.
