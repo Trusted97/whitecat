@@ -48,6 +48,12 @@ class PhpCsFixerService
 
         $requireDev = $composer['require-dev'];
 
+        if (!\is_array($requireDev)) {
+            $this->io->error('The require-dev section in composer.json is invalid or missing!');
+
+            return Command::FAILURE;
+        }
+
         $isInstalledPhpCsFixer = \array_key_exists('friendsofphp/php-cs-fixer', $requireDev);
 
         if (!$isInstalledPhpCsFixer) {

@@ -30,13 +30,13 @@ docker-compose up --build -d
 Now you can run commands needed to work on the project. For example, say you want to install the dependencies on PHP 8.0:
 
 ```console
-docker-compose run whitecat-81 composer install
+docker-compose run whitecat-83 composer install
 ```
 
 or for enter the container
 
 ```console
-docker-compose exec whitecat-81 sh
+docker-compose exec whitecat-83 sh
 ```
 
 ## Testing

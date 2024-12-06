@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   whitecat-83:
     build: docker/php-8.3

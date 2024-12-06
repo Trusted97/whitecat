@@ -51,6 +51,12 @@ class PhpUnitService
 
         $requireDev = $composer['require-dev'];
 
+        if (!\is_array($requireDev)) {
+            $this->io->error('The require-dev section in composer.json is invalid or missing!');
+
+            return Command::FAILURE;
+        }
+
         $isInstalledPhpUnit = \array_key_exists('phpunit/phpunit', $requireDev);
 
         if (!$isInstalledPhpUnit) {

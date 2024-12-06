@@ -24,7 +24,6 @@ class PhpStanServiceTest extends TestCase
             ->getMock();
 
         $phpStanService = new PhpStanService($mockIo, $mockFs);
-        $this->assertNotNull($phpStanService);
         $this->assertInstanceOf(PhpStanService::class, $phpStanService);
     }
 
