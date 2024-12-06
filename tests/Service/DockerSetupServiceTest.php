@@ -21,7 +21,6 @@ class DockerSetupServiceTest extends TestCase
             ->getMock();
 
         $dockerService = new DockerSetupService($mockIo, $mockFs);
-        $this->assertNotNull($dockerService);
         $this->assertInstanceOf(DockerSetupService::class, $dockerService);
     }
 

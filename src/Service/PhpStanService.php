@@ -48,9 +48,15 @@ class PhpStanService
 
         $requireDev = $composer['require-dev'];
 
-        $isInstalledPhpUnit = \array_key_exists('phpstan/phpstan', $requireDev);
+        if (!\is_array($requireDev)) {
+            $this->io->error('The require-dev section in composer.json is invalid or missing!');
 
-        if (!$isInstalledPhpUnit) {
+            return Command::FAILURE;
+        }
+
+        $isInstalledPhpStan = \array_key_exists('phpstan/phpstan', $requireDev);
+
+        if (!$isInstalledPhpStan) {
             $this->io->warning('It seems that phpstan/phpstan is not installed');
             $this->io->warning('Launch in terminal \'composer require --dev phpstan/phpstan\'');
 

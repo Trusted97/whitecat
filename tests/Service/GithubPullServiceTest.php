@@ -21,7 +21,6 @@ class GithubPullServiceTest extends TestCase
             ->getMock();
 
         $githubIssueService = new GithubPullService($mockIo, $mockFs);
-        $this->assertNotNull($githubIssueService);
         $this->assertInstanceOf(GithubPullService::class, $githubIssueService);
     }
 

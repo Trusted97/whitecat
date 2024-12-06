@@ -21,7 +21,6 @@ class GithubIssueServiceTest extends TestCase
             ->getMock();
 
         $githubIssueService = new GithubIssueService($mockIo, $mockFs);
-        $this->assertNotNull($githubIssueService);
         $this->assertInstanceOf(GithubIssueService::class, $githubIssueService);
     }
 

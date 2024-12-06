@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        php: ["8.3"]
+        php: ["8.2","8.3","8.4"]
 
     name: ⚙️ Running test for PHP ${{ matrix.php }}
 
@@ -42,14 +42,15 @@ jobs:
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
       - name: 🔍 Check php-cs-fixer
+        if: matrix.php-version == '8.1' && matrix.php-version == '8.2' && matrix.php-version == '8.3' # Php-cs-fixer not ready for 8.4
         run: composer php-cs-fixer-dry-run
 
       - name: ✅ PHPUnit tests
         run: vendor/bin/phpunit -c phpunit.xml --coverage-clover clover.xml
 
       - name: 📝 PHPStan check
-        run: vendor/bin/phpstan analyse src -l 9
+        run: vendor/bin/phpstan analyse src -l 10
 
       - name: 📤 Upload coverage to Codecov
         uses: codecov/codecov-action@v5
-        if: matrix.php == '8.1'
+        if: matrix.php == '8.4'

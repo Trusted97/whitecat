@@ -1,9 +1,7 @@
-version: '3.9'
-
 services:
-  whitecat-83:
-    build: docker/php-8.3
-    container_name: whitecat-83
+  whitecat-82:
+    build: docker/php-8.2
+    container_name: whitecat-82
     working_dir: /app
     tty: true
     volumes:

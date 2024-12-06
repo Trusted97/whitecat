@@ -123,8 +123,8 @@ vendor/bin/whitecat phpunit:init
 
 | Repository Branch | PHP Compatibility | Status                     | Docs                        |
 |-------------------|-------------------|----------------------------|-----------------------------|
+| `2.x`             | `^8.3`            | New features and bug fixes | [Documentation 1.x](./docs) |
 | `1.x`             | `^8.1`            | New features and bug fixes | [Documentation 1.x](./docs) |
-| `2.x`             | `^8.3`            | New features and bug fixes | [Documentation 2.x](./docs) |
 
 ## Contributing
 

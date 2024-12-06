@@ -23,7 +23,6 @@ class PhpCsFixerServiceTest extends TestCase
             ->getMock();
 
         $phpCsFixerService = new PhpCsFixerService($mockIo, $mockFs);
-        $this->assertNotNull($phpCsFixerService);
         $this->assertInstanceOf(PhpCsFixerService::class, $phpCsFixerService);
     }
 

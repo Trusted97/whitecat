@@ -21,7 +21,6 @@ class GithubInitServiceTest extends TestCase
             ->getMock();
 
         $githubIssueService = new GithubInitService($mockIo, $mockFs);
-        $this->assertNotNull($githubIssueService);
         $this->assertInstanceOf(GithubInitService::class, $githubIssueService);
     }
 

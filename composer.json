@@ -25,13 +25,14 @@
         }
     },
     "require": {
-        "php": "^8.3",
+        "php": "^8.2",
+        "ext-json": "*",
         "symfony/console": "^7.0",
         "symfony/filesystem": "^7.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.14",
-        "phpstan/phpstan": "^1.10",
+        "friendsofphp/php-cs-fixer": "^3.65",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^11",
         "symfony/var-dumper": "^7.0"
     },
@@ -47,7 +48,7 @@
         "test-coverage-html": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html coverage",
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --verbose",
         "php-cs-fixer-dry-run": "vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
-        "phpstan" : "vendor/bin/phpstan analyse src -l 9",
-        "phpstan-test" : "vendor/bin/phpstan analyse tests -l 9"
+        "phpstan" : "vendor/bin/phpstan analyse src -l 10",
+        "phpstan-test" : "vendor/bin/phpstan analyse tests -l 10"
     }
 }

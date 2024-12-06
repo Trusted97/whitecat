@@ -19,8 +19,6 @@ To use it, you first need to install:
 * [Docker](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
-Make sure the versions installed support [Compose file format 3.9](https://docs.docker.com/compose/compose-file/).
-
 You can then build the images:
 
 ```console
@@ -30,13 +28,13 @@ docker-compose up --build -d
 Now you can run commands needed to work on the project. For example, say you want to install the dependencies on PHP 8.0:
 
 ```console
-docker-compose run whitecat-81 composer install
+docker-compose run whitecat-82 composer install
 ```
 
 or for enter the container
 
 ```console
-docker-compose exec whitecat-81 sh
+docker-compose exec whitecat-82 sh
 ```
 
 ## Testing

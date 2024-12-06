@@ -10,7 +10,7 @@ class ComposerHelper
      * @throws \JsonException
      * @throws InvalidComposerException
      *
-     * @return string[][]
+     * @return array<mixed, mixed>
      */
     public function getComposerContent(string $composerPath): array
     {

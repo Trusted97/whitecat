@@ -24,7 +24,6 @@ class PhpUnitServiceTest extends TestCase
             ->getMock();
 
         $phpCsFixerService = new PhpUnitService($mockIo, $mockFs);
-        $this->assertNotNull($phpCsFixerService);
         $this->assertInstanceOf(PhpUnitService::class, $phpCsFixerService);
     }
 

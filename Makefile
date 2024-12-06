@@ -1,31 +1,31 @@
-docker-build:
+build:
 	@echo "Building docker container from docker-compose.yml"
 	docker-compose up --build -d
 
-docker-clean-build:
+clean-build:
 	@echo "Building clean docker container from docker-compose.yml"
 	docker-compose up --build -d --force-recreate --remove-orphans
 
-docker-shell:
+shell:
 	@echo "Open shell in container"
-	docker exec -it whitecat-81 sh
+	docker exec -it whitecat-82 sh
 
-docker-stop:
+stop:
 	@echo "Stopping docker container"
 	docker-compose down
 
 test:
 	@echo "Running test..."
-	docker exec -it whitecat-81 composer test
+	docker exec -it whitecat-82 composer test
 
 php-cs-fixer:
 	@echo "Launching php-cs-fixer"
-	docker exec -it whitecat-81 composer php-cs-fixer
+	docker exec -it whitecat-82 composer php-cs-fixer
 
 phpstan:
 	@echo "Launching php-cs-fixer"
-	docker exec -it whitecat-81 composer phpstan
+	docker exec -it whitecat-82 composer phpstan
 
 phpstan-test:
 	@echo "Launching php-cs-fixer"
-	docker exec -it whitecat-81 composer phpstan-test
+	docker exec -it whitecat-82 composer phpstan-test
