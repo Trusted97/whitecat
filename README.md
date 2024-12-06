@@ -35,7 +35,7 @@ In composer.json
 
 ``` json
 "require-dev": {
-    "trusted97/whitecat": "^1.0.0"
+    "trusted97/whitecat": "^2.0"
 },
 ```
 
