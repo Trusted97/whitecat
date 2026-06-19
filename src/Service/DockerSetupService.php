@@ -2,7 +2,6 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -23,12 +22,13 @@ class DockerSetupService
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs,
+        protected readonly string $workingDirectory = '.',
     ) {
         $this->dockerComposePath           = Path::normalize(DirectoryPath::DOCKER_COMPOSE->value);
         $this->dockerDirectoryPath         = Path::normalize(DirectoryPath::DOCKER->value);
         $this->dockerDistDirectoryPath     = Path::normalize(DirectoryPath::DIST_DOCKER->value);
-        $this->fileCopyHelper              = new FileCopyHelper($this->io, $this->fs);
-        $this->directoryCopyHelper         = new DirectoryCopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper              = new FileCopyHelper($this->io, $this->fs, $this->workingDirectory);
+        $this->directoryCopyHelper         = new DirectoryCopyHelper($this->io, $this->fs, $this->workingDirectory);
     }
 
     public function run(): int
@@ -38,15 +38,15 @@ class DockerSetupService
         $this->addDockerDirectory();
         $this->addDockerCompose();
 
-        $this->io->success('All work was correctly done!');
+        $this->io->success('Done. Your project files are ready.');
 
         return Command::SUCCESS;
     }
 
-    #[CoversNothing]
     protected function addDockerDirectory(): void
     {
-        $dockerDirectoryExists   = $this->fs->exists($this->dockerDirectoryPath);
+        $dockerDirectoryTarget   = Path::join($this->workingDirectory, $this->dockerDirectoryPath);
+        $dockerDirectoryExists   = $this->fs->exists($dockerDirectoryTarget);
         $override                = true;
 
         if ($dockerDirectoryExists) {
@@ -58,7 +58,7 @@ class DockerSetupService
 
         if ($override) {
             try {
-                $this->fs->mkdir($this->dockerDirectoryPath);
+                $this->fs->mkdir($dockerDirectoryTarget);
                 $this->io->comment('Docker directory created');
             } catch (IOExceptionInterface $IOException) {
                 $this->io->error(
@@ -88,7 +88,6 @@ class DockerSetupService
         );
     }
 
-    #[CoversNothing]
     protected function addDockerCompose(): void
     {
         $this->fileCopyHelper->copyFile(

@@ -16,8 +16,8 @@ class ComposerHelper
     {
         $composerContent = \file_get_contents($composerPath);
 
-        if (!$composerContent) {
-            throw new InvalidComposerException();
+        if (false === $composerContent || 1 !== \preg_match('/\S/u', $composerContent)) {
+            throw new InvalidComposerException(\sprintf('Unable to read a valid composer.json file at "%s".', $composerPath));
         }
 
         $composer = \json_decode(
@@ -27,8 +27,8 @@ class ComposerHelper
             flags: \JSON_THROW_ON_ERROR
         );
 
-        if (!\is_array($composer)) {
-            throw new InvalidComposerException();
+        if (!\is_array($composer) || \array_is_list($composer)) {
+            throw new InvalidComposerException(\sprintf('The composer.json file at "%s" must decode to a JSON object.', $composerPath));
         }
 
         return $composer;

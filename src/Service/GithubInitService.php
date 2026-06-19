@@ -2,7 +2,6 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -19,14 +18,15 @@ class GithubInitService
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs,
+        protected readonly string $workingDirectory = '.',
     ) {
         $this->githubDirectoryPath = Path::normalize(DirectoryPath::GITHUB->value);
-        $this->fileCopyHelper      = new FileCopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper      = new FileCopyHelper($this->io, $this->fs, $this->workingDirectory);
     }
 
     public function run(): int
     {
-        $this->io->title('Github init');
+        $this->io->title('GitHub init');
 
         $this->addGithubDirectory();
         $this->addReadme();
@@ -34,28 +34,28 @@ class GithubInitService
         $this->addGitAttributes();
         $this->addGitIgnore();
 
-        $this->io->success('All work was correctly done!');
+        $this->io->success('Done. Your project files are ready.');
 
         return Command::SUCCESS;
     }
 
-    #[CoversNothing]
     protected function addGithubDirectory(): void
     {
-        $githubDirectoryExists = $this->fs->exists($this->githubDirectoryPath);
+        $githubDirectoryTarget = Path::join($this->workingDirectory, $this->githubDirectoryPath);
+        $githubDirectoryExists = $this->fs->exists($githubDirectoryTarget);
         $override              = true;
 
         if ($githubDirectoryExists) {
             $override = $this->io->confirm(
-                question: 'It seems that github directory already exists, do you want to continue?',
+                question: 'It seems that GitHub directory already exists, do you want to continue?',
                 default: false
             );
         }
 
         if ($override) {
             try {
-                $this->fs->mkdir($this->githubDirectoryPath);
-                $this->io->comment('Github directory created');
+                $this->fs->mkdir($githubDirectoryTarget);
+                $this->io->comment('GitHub directory created');
             } catch (IOExceptionInterface $IOException) {
                 $this->io->error(
                     \sprintf(
@@ -72,11 +72,10 @@ class GithubInitService
                 );
             }
         } else {
-            $this->io->comment('Skipped creation of Github directory');
+            $this->io->comment('Skipped creation of GitHub directory');
         }
     }
 
-    #[CoversNothing]
     protected function addEditorConfig(): void
     {
         $this->fileCopyHelper->copyFile(
@@ -89,7 +88,6 @@ class GithubInitService
         );
     }
 
-    #[CoversNothing]
     protected function addGitAttributes(): void
     {
         $this->fileCopyHelper->copyFile(
@@ -102,7 +100,6 @@ class GithubInitService
         );
     }
 
-    #[CoversNothing]
     protected function addGitIgnore(): void
     {
         $this->fileCopyHelper->copyFile(
@@ -115,7 +112,6 @@ class GithubInitService
         );
     }
 
-    #[CoversNothing]
     protected function addReadme(): void
     {
         $this->fileCopyHelper->copyFile(

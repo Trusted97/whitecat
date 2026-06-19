@@ -2,7 +2,6 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -19,42 +18,43 @@ class GithubPullService
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs,
+        protected readonly string $workingDirectory = '.',
     ) {
         $this->githubPullDirectoryPath = Path::normalize(DirectoryPath::PULL->value);
-        $this->fileCopyHelper          = new FileCopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper          = new FileCopyHelper($this->io, $this->fs, $this->workingDirectory);
     }
 
     public function run(): int
     {
-        $this->io->title('Github pull');
+        $this->io->title('GitHub pull');
 
         $this->addGithubPullDirectory();
         $this->addFixPullRequestTemplate();
         $this->addImprovementPullRequestTemplate();
         $this->addNewFeaturePullRequestTemplate();
 
-        $this->io->success('All work was correctly done!');
+        $this->io->success('Done. Your project files are ready.');
 
         return Command::SUCCESS;
     }
 
-    #[CoversNothing]
     protected function addGithubPullDirectory(): void
     {
-        $githubIssueDirectoryExists   = $this->fs->exists($this->githubPullDirectoryPath);
+        $githubPullDirectoryTarget    = Path::join($this->workingDirectory, $this->githubPullDirectoryPath);
+        $githubIssueDirectoryExists   = $this->fs->exists($githubPullDirectoryTarget);
         $override                     = true;
 
         if ($githubIssueDirectoryExists) {
             $override = $this->io->confirm(
-                question: 'It seems that github pull request directory already exists, do you want to continue?',
+                question: 'It seems that GitHub pull request directory already exists, do you want to continue?',
                 default: false
             );
         }
 
         if ($override) {
             try {
-                $this->fs->mkdir($this->githubPullDirectoryPath);
-                $this->io->comment('Github pull request directory created');
+                $this->fs->mkdir($githubPullDirectoryTarget);
+                $this->io->comment('GitHub pull request directory created');
             } catch (IOExceptionInterface $IOException) {
                 $this->io->error(
                     \sprintf(
@@ -71,11 +71,10 @@ class GithubPullService
                 );
             }
         } else {
-            $this->io->comment('Skipped creation of Github pull request directory');
+            $this->io->comment('Skipped creation of GitHub pull request directory');
         }
     }
 
-    #[CoversNothing]
     protected function addFixPullRequestTemplate(): void
     {
         $this->fileCopyHelper->copyFile(
@@ -88,7 +87,6 @@ class GithubPullService
         );
     }
 
-    #[CoversNothing]
     protected function addImprovementPullRequestTemplate(): void
     {
         $this->fileCopyHelper->copyFile(
@@ -101,7 +99,6 @@ class GithubPullService
         );
     }
 
-    #[CoversNothing]
     protected function addNewFeaturePullRequestTemplate(): void
     {
         $this->fileCopyHelper->copyFile(
