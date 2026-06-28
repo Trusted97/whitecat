@@ -11,6 +11,7 @@ class FileCopyHelper
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs,
+        private readonly string $workingDirectory = '.',
     ) {
     }
 
@@ -22,7 +23,8 @@ class FileCopyHelper
         string $sourceFileDirectory,
         string $distFileDirectory,
     ): void {
-        $checkExists = $this->fs->exists($sourceFileDirectory . $fileName);
+        $targetFile  = Path::join($this->workingDirectory, $sourceFileDirectory, $fileName);
+        $checkExists = $this->fs->exists($targetFile);
         $override    = true;
 
         if ($checkExists) {
@@ -36,7 +38,7 @@ class FileCopyHelper
             $this->io->comment($overrideCommentMessage);
             $this->fs->copy(
                 originFile: Path::normalize(__DIR__ . '/../../' . $distFileDirectory . $fileName),
-                targetFile: $sourceFileDirectory . $fileName,
+                targetFile: $targetFile,
                 overwriteNewerFiles: true
             );
         } else {

@@ -11,6 +11,7 @@ class DirectoryCopyHelper
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs,
+        private readonly string $workingDirectory = '.',
     ) {
     }
 
@@ -21,8 +22,9 @@ class DirectoryCopyHelper
         string $sourceDirectory,
         string $distDirectory,
     ): void {
-        $checkExists = $this->fs->exists($sourceDirectory);
-        $override    = true;
+        $targetDirectory = Path::join($this->workingDirectory, $sourceDirectory);
+        $checkExists     = $this->fs->exists($targetDirectory);
+        $override        = true;
 
         if ($checkExists) {
             $override = $this->io->confirm(
@@ -35,7 +37,7 @@ class DirectoryCopyHelper
             $this->io->comment($overrideCommentMessage);
             $this->fs->mirror(
                 originDir: Path::normalize(__DIR__ . '/../../' . $distDirectory),
-                targetDir: $sourceDirectory
+                targetDir: $targetDirectory
             );
         } else {
             $this->io->comment($skippedMessage);

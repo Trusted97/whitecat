@@ -43,11 +43,11 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "vendor/bin/phpunit -c phpunit.xml --no-coverage",
-        "test-coverage-text": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --colors=never --coverage-text",
-        "test-coverage-html": "XDEBUG_MODE=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html coverage",
-        "php-cs-fixer": "vendor/bin/php-cs-fixer fix --verbose",
-        "php-cs-fixer-dry-run": "vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
+        "test": "php -d error_reporting=8191 vendor/bin/phpunit -c phpunit.xml --no-coverage",
+        "test-coverage-text": "XDEBUG_MODE=coverage php -d error_reporting=8191 vendor/bin/phpunit -c phpunit.xml --colors=never --coverage-text",
+        "test-coverage-html": "XDEBUG_MODE=coverage php -d error_reporting=8191 vendor/bin/phpunit -c phpunit.xml --coverage-html coverage",
+        "php-cs-fixer": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --verbose --sequential",
+        "php-cs-fixer-dry-run": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --verbose --diff --dry-run --sequential",
         "phpstan" : "vendor/bin/phpstan analyse src -l 10",
         "phpstan-test" : "vendor/bin/phpstan analyse tests -l 10"
     }

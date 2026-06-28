@@ -2,7 +2,6 @@
 
 namespace Whitecat\Service;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -19,42 +18,43 @@ class GithubIssueService
     public function __construct(
         protected readonly SymfonyStyle $io,
         protected readonly Filesystem $fs,
+        protected readonly string $workingDirectory = '.',
     ) {
         $this->githubIssueDirectoryPath = Path::normalize(DirectoryPath::ISSUE->value);
-        $this->fileCopyHelper           = new FileCopyHelper($this->io, $this->fs);
+        $this->fileCopyHelper           = new FileCopyHelper($this->io, $this->fs, $this->workingDirectory);
     }
 
     public function run(): int
     {
-        $this->io->title('Github issue');
+        $this->io->title('GitHub issue');
 
         $this->addGithubIssueDirectory();
         $this->addBugReportIssue();
         $this->addFeatureRequestIssue();
         $this->addIssueConfigFile();
 
-        $this->io->success('All work was correctly done!');
+        $this->io->success('Done. Your project files are ready.');
 
         return Command::SUCCESS;
     }
 
-    #[CoversNothing]
     protected function addGithubIssueDirectory(): void
     {
-        $githubIssueDirectoryExists   = $this->fs->exists($this->githubIssueDirectoryPath);
+        $githubIssueDirectoryTarget   = Path::join($this->workingDirectory, $this->githubIssueDirectoryPath);
+        $githubIssueDirectoryExists   = $this->fs->exists($githubIssueDirectoryTarget);
         $override                     = true;
 
         if ($githubIssueDirectoryExists) {
             $override = $this->io->confirm(
-                question: 'It seems that github issue directory already exists, do you want to continue?',
+                question: 'It seems that GitHub issue directory already exists, do you want to continue?',
                 default: false
             );
         }
 
         if ($override) {
             try {
-                $this->fs->mkdir($this->githubIssueDirectoryPath);
-                $this->io->comment('Github issue directory created');
+                $this->fs->mkdir($githubIssueDirectoryTarget);
+                $this->io->comment('GitHub issue directory created');
             } catch (IOExceptionInterface $IOException) {
                 $this->io->error(
                     \sprintf(
@@ -71,11 +71,10 @@ class GithubIssueService
                 );
             }
         } else {
-            $this->io->comment('Skipped creation of Github issue directory');
+            $this->io->comment('Skipped creation of GitHub issue directory');
         }
     }
 
-    #[CoversNothing]
     protected function addBugReportIssue(): void
     {
         $this->fileCopyHelper->copyFile(
@@ -88,7 +87,6 @@ class GithubIssueService
         );
     }
 
-    #[CoversNothing]
     protected function addFeatureRequestIssue(): void
     {
         $this->fileCopyHelper->copyFile(
@@ -101,7 +99,6 @@ class GithubIssueService
         );
     }
 
-    #[CoversNothing]
     protected function addIssueConfigFile(): void
     {
         $this->fileCopyHelper->copyFile(

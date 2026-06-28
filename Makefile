@@ -18,7 +18,7 @@ test:
 	@echo "Running test..."
 	docker exec -it whitecat-82 composer test
 
-php-cs-fixer:
+style:
 	@echo "Launching php-cs-fixer"
 	docker exec -it whitecat-82 composer php-cs-fixer
 

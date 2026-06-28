@@ -37,11 +37,19 @@ composer require --dev trusted97/whitecat
 
 ### Usage
 
-This command list all possible command available in whitecat
+List the commands available in Whitecat:
 
 ``` sh
 vendor/bin/whitecat list
 ```
+
+Every generator command writes to the current working directory by default. To target another project without changing directories, pass `--working-dir`:
+
+``` sh
+vendor/bin/whitecat phpunit:init --working-dir=/path/to/project
+```
+
+Commands that depend on Composer tooling validate the target project's `composer.json` first and print the exact `composer require --dev ...` command when a dependency is missing.
 
 #### Docker setup
 
