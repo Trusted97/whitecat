@@ -52,5 +52,5 @@ jobs:
         run: vendor/bin/phpstan analyse src -l 10
 
       - name: 📤 Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         if: matrix.php == '8.4'
